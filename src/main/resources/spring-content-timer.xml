@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+
+   <!--&lt;!&ndash;  线程执行器配置，用于任务注册&ndash;&gt;
+    <bean id="executor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="10" />
+        <property name="maxPoolSize" value="100" />
+        <property name="queueCapacity" value="500" />
+    </bean>
+    &lt;!&ndash; 业务对象 &ndash;&gt;
+    <bean id="bizObject" class="com.cn.timer.ExpireJobTask" />
+    &lt;!&ndash; 调度业务 &ndash;&gt;
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+
+        <property name="targetObject" ref="bizObject" />
+
+        <property name="targetMethod" value="doBiz" />
+    </bean>
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+
+        <property name="jobDetail" ref="jobDetail" />
+
+        <property name="cronExpression" value="59 59 23 * * ? " />
+    </bean>
+
+    <bean id="taskTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+
+        <property name="jobDetail" ref="jobDetail" />
+
+        <property name="startDelay" value="10000" />
+
+        <property name="repeatInterval" value="60000" />
+    </bean>
+    &lt;!&ndash; 设置调度 &ndash;&gt;
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+
+                <ref bean="cronTrigger" />
+
+            </list>
+
+        </property>
+
+        <property name="taskExecutor" ref="executor" />
+    </bean>-->
+
+    <bean id="springUtils" class="com.cn.util.SpringUtils"/>
+    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" />
+   <!-- <bean id="scheduler"  class="org.springframework.scheduling.quartz.SchedulerFactoryBean"/>-->
+</beans>
