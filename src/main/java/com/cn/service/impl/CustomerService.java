@@ -25,10 +25,6 @@ public class CustomerService implements ICustomerService {
         return customerDao.pageList(customer);
     }
 
-    @Override
-    public List<Customer> getAllValidCustomer(String type) {
-        return customerDao.allValidList(type);
-    }
 
     @Override
     public Customer getCustomerByEntity(Customer customer) {

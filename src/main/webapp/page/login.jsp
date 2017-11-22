@@ -7,8 +7,10 @@
     <meta charset="utf-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
     <title>电子烟管理平台</title>
-	<%@include file="/page/common/header.jsp"%><!--静态包含-->
-	<link rel="stylesheet" type="text/css"  href="${pageContext.request.contextPath}/css/login/login.css" />
+	<link href="<%=request.getContextPath()%>/css/base.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/css/login/login.css" rel="stylesheet">
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/uimaker/jquery.min.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/uimaker/jquery.easyui.min.js"></script>
 
 </head> 
 <body class="default">

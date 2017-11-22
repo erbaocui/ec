@@ -21,10 +21,6 @@ public class CustomerDaoImpl extends BaseDaoImpl implements ICustomerDao {
 
     }
 
-    @Override
-    public List<Customer> allValidList(String type) {
-        return (List<Customer>)list("com.cn.dao.CustomerMapper.selectAllValid", type);
-    }
 
     @Override
     public void insert(Customer customer) {

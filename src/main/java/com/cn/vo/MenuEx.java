@@ -60,10 +60,12 @@ public class MenuEx {
         private String isLeaf;
         private String  roleId;
 
+        private  Integer current;
+
     public MenuEx() {
     }
 
-    public MenuEx(String id, String name, Integer seq, String parentId, String url, String icon, String isLeaf, String roleId) {
+    public MenuEx(String id, String name, Integer seq, String parentId, String url, String icon, String isLeaf, String roleId,Integer current) {
             this.id = id;
             this.name = name;
             this.seq = seq;
@@ -72,6 +74,7 @@ public class MenuEx {
             this.icon = icon;
             this.isLeaf=isLeaf;
             this.roleId=roleId;
+            this.current= current;
         }
 
         /**
@@ -190,5 +193,13 @@ public class MenuEx {
 
     public void setRoleId(String roleId) {
         this.roleId = roleId;
+    }
+
+    public Integer getDeafult() {
+        return current;
+    }
+
+    public void setDeafult(Integer current) {
+        this.current = current;
     }
 }

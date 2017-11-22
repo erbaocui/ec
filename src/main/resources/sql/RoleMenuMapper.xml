@@ -22,6 +22,7 @@
     <result column="icon"  property="icon" javaType="java.lang.String" jdbcType="VARCHAR" />
     <result column="is_leaf" property="isLeaf" javaType="java.lang.String" jdbcType="VARCHAR" />
     <result column="role_id" property="roleId" javaType="java.lang.String" jdbcType="VARCHAR" />
+    <result column="current" property="current" javaType="java.lang.Integer" jdbcType="VARCHAR" />
 
   </resultMap>
 
@@ -36,7 +37,7 @@
   <select id="selectRoleMenuByParentId" parameterType="com.cn.model.RoleMenu" resultMap="extendResultMap" >
 
    select distinct
-   m.id,m.name,m.seq, m.parent_id, m.url, m.icon,m.is_leaf,rm.role_id
+   m.id,m.name,m.seq, m.parent_id, m.url, m.icon,m.is_leaf,rm.role_id,m.current
    from t_menu m
    left join(select menu_id,role_id from t_role_menu where
    <if test="roleId != null" >
@@ -56,7 +57,7 @@
   <select id="selectRoleMenuShowByParentId" parameterType="com.cn.model.RoleMenu" resultMap="extendResultMap" >
 
     select distinct
-    m.id,m.name,m.seq, m.parent_id, m.url, m.icon,m.is_leaf,rm.role_id
+    m.id,m.name,m.seq, m.parent_id, m.url, m.icon,m.is_leaf,rm.role_id,m.current
     from t_menu m
     INNER join t_role_menu rm  on rm.menu_id=m.id
     where 1=1

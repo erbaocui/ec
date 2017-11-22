@@ -1,16 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" scope="session"/>
-<c:set var="currentLocale" value="${pageContext.response.locale}" scope="session"/>
-<html>
-<body>
-省：<select id="cmbProvince"></select>
-市：<select id="cmbCity"></select>
-区：<select id="cmbArea"></select>
 
-
-<script type="text/javascript">
 
 
 
@@ -968,7 +956,5 @@ var provinceList = [
 ]
 
 
-addressInit('cmbProvince', 'cmbCity', 'cmbArea', '', '', '');
-</script>
-</body>
-</html>
+
+

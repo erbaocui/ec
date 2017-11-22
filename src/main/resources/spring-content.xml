@@ -16,9 +16,10 @@
 
 
     <!-- mybatis配置 -->
-
+   <context:property-placeholder ignore-unresolvable="true" location="classpath:*.properties"/>
     <import resource="classpath:spring-content-timer.xml"/>
-   <import resource="classpath:spring-context-tx.xml"/>
+    <import resource="classpath:spring-context-tx.xml"/>
+   <import resource="classpath:spring-content-es.xml"/>
     <!-- 国际化资源文件 -->
 
 

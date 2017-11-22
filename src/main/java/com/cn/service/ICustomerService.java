@@ -7,7 +7,6 @@ import java.util.List;
 public interface ICustomerService {
     //用户
     public List<Customer> getCustomerPageByEntity(Customer customer);
-    public List<Customer> getAllValidCustomer(String type);
     public Customer getCustomerByEntity(Customer customer);
     public void addCustomer(Customer customer);
     public void modifyCustomer(Customer customer);

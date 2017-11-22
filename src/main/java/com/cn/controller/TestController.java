@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContext;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,10 +60,13 @@ public class TestController extends BaseController{
 
     @RequestMapping(value="changeLang")
     public String changeLanguage(Model model, HttpServletRequest request,HttpServletResponse response,HttpSession session){
-       /* WebApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(session.getServletContext());
+       WebApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(session.getServletContext());
         Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
-        String testMsg = applicationContext.getMessage("test.msg",null,locale);
-        System.out.println(testMsg);
+       // String testMsg = applicationContext.getMessage("test.msg", null, locale);
+        //ResourceBundle myResources = ResourceBundle.getBundle("test.msg", locale);
+       // String aha = myResources.getString("test.msg");
+        RequestContext requestContext = new RequestContext(request);
+        System.out.println(requestContext.getMessage("test.msg"));
         //model.addAttribute("i18n_msg",testMsg);*/
         return "test";
 

@@ -9,23 +9,14 @@ $.extend($.fn.validatebox.defaults.rules, {
     CheckCustomer:{
         validator:function(value, param){
             var result = true;
-            var  test;
-            if( $(param[0]).val()=='0'){
-                test=/^(?:13\d|15\d|18\d)-?\d{5}(\d{3}|\*{3})$/.test(value);
-                if(!test){
+            var  test=/^(?:13\d|15\d|18\d)-?\d{5}(\d{3}|\*{3})$/.test(value);
+            if(!test){
                     result = false;
                     $.fn.validatebox.defaults.rules.CheckCustomer.message = '请输入手机号码';
                     return result;
-                }
-
-            }else{
-               test = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(value);
-                if(!test){
-                    result = false;
-                    $.fn.validatebox.defaults.rules.CheckCustomer.message = '请输邮箱';
-                    return result;
-                }
             }
+
+
 
             if(value.length!=0){
                 $.ajax({
@@ -33,7 +24,7 @@ $.extend($.fn.validatebox.defaults.rules, {
                     async: false,
                     url:getContextPath ()+"/customer/exist.do",
                     dataType:"json",
-                    data:{"loginName":value,"type":$(param[0]).val()},
+                    data:{"loginName":value},
                     success: function(data){
                         if(data.result==true){
                             $.fn.validatebox.defaults.rules.CheckCustomer.message ="客户已存在";

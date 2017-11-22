@@ -42,7 +42,7 @@ public class JobTaskController {
 
 	@RequestMapping(value="/task")
 	public String task() throws Exception{
-		return "redirect:/page/task/taskList.jsp";
+		return "redirect:/page/task/list.jsp";
 	}
 
 	@RequestMapping("/list")

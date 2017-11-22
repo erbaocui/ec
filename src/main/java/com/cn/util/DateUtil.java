@@ -495,11 +495,18 @@ public class DateUtil {
     public static Date setTimeZone(Date date) {
         // 设置时区为tz
         // (02) 设置时区为"GMT+08:00"
-        TimeZone china = TimeZone.getTimeZone("GMT+:08:00");
+        TimeZone china = TimeZone.getTimeZone("GMT+8");
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(china);
         calendar.setTime(date);
         return calendar.getTime();
+    }
+
+
+    public static Date dateTransformBetweenTimeZone(Date sourceDate,
+                                                      TimeZone sourceTimeZone, TimeZone targetTimeZone) {
+        Long targetTime = sourceDate.getTime() - sourceTimeZone.getRawOffset() + targetTimeZone.getRawOffset();
+        return new Date(targetTime);
     }
 
 }

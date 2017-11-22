@@ -12,15 +12,22 @@ $(document).ready(function(){
         method:"post",
         columns:[[
             {field:'ck',title:'',width:100,checkbox:true},
-
             {field:'loginName',title:'登录名',width:100},
             {field:'displayName',title:'姓名',width:100},
-            {field:'createTime',title:'创建时间',width:100,align:'center', formatter:commonFormatter.time},
-            {field: 'status', title: '状态', width: 100,
-                formatter: commonFormatter.status
-            } ,
-            {field:'remark',title:'备注',width:100,align:'center'},
-            {field:'createTime',title:'创建时间',width:100,align:'center', formatter:commonFormatter.time},
+            {field:'type',title:'类型',width:100},
+            {field:'gender',title:'性别',width:100},
+            {field:'birthdate',title:'出生日期',width:100,align:'center', formatter:commonFormatter.day},
+            {field:'province',title:'省',width:100,align:'center'},
+            {field:'city',title:'市',width:100,align:'center'},
+            {field:'county',title:'县/区',width:100,align:'center'},
+            {field: 'status', title: '状态', width: 100,align:'center',
+                formatter: function (value, rec, index) {
+                    if (value == 0) return '有效';
+                    if (value == 1) return '无效';
+                    return '';
+                }
+            },
+            {field:'remark',title:'备注',width:100,align:'center',formatter:commonFormatter.brief},
             {field:'id',title:'',width:100,hidden:true}
         ]],
         singleSelect: true,//单选
@@ -72,24 +79,22 @@ $(document).ready(function(){
             "type":"0"
         });
     });
-    //导出
-    $('#export').click(function() {
-        if(canExport) {
-            window.location.href = getContextPath() + "/customer/export.do?type=0";
-        }else{
-            $.messager.alert("系统提示","请先统计数据");
-            return;
-        }
+    //重置按钮
+    $('#resetBtn').click(function(){
+        $("#qf").form('clear');
+        $("#qryStatus").combobox("setValue",-1);
     });
+
 
     //新增窗口
     $('#openAddDialog').click(function(){
        $("#fm").form('clear');
+        addressInit('cmbProvince', 'cmbCity', 'cmbArea', '', '', '');
         $("#checkPasswordDisplay").show();
-        $("#type").val("0");
+        $("#gender").combobox("setValue",0);
         $("#passwordDisplay").show();
         $("#statusDisplay").hide();
-        $('#loginName').attr("disabled","true");
+        $('#loginName').attr("disabled","");
         $('#loginName').validatebox('reduce');
         $('#password').validatebox('reduce');
         $('#checkPassword').validatebox('reduce');
@@ -104,9 +109,15 @@ $(document).ready(function(){
             $.messager.alert("系统提示", "请选择一条要编辑的数据！");
             return;
         }
+
         var row = selectedRows[0];
+        if (row.type != 0) {
+            $.messager.alert("系统提示", "只能编辑普通用户！");
+            return;
+        }
         $('#fm').form('load', row);
-        $("#status").val(row.status);
+        addressInit('cmbProvince', 'cmbCity', 'cmbArea',row.province, row.city, row.county);
+        $("#birthdate").val(commonFormatter.day(row.birthdate,"",""));
         $("#id").val(row.id);
         $("#type").val("0");
         $("#checkPasswordDisplay").hide();
@@ -154,7 +165,11 @@ $(document).ready(function(){
             $.messager.alert("系统提示", "请选择一条要编辑的数据！");
             return;
         }
-        $("#type").val("0");
+        var row = selectedRows[0];
+        if (row.type != 0) {
+            $.messager.alert("系统提示", "只能编辑普通用户！");
+            return;
+        }
         $("#resetPwDialog").dialog({title: "重置密码",modal:true});
         $("#resetPwDialog").dialog("open");
     });

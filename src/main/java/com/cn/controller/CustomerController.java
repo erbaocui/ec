@@ -1,9 +1,11 @@
 package com.cn.controller;
 
+import com.cn.constant.CustomerType;
 import com.cn.constant.Status;
 import com.cn.model.Customer;
 import com.cn.model.Customer;
 import com.cn.service.ICustomerService;
+import com.cn.util.DateUtil;
 import com.cn.util.ExcelExportUtil;
 import com.cn.util.MD5Util;
 import com.cn.util.StringUtil;
@@ -139,29 +141,36 @@ public class CustomerController extends BaseController{
      */
     @RequestMapping(value = "/add")
     public @ResponseBody
-    Map add(String loginName,String displayName,String idNumber,String type,String password,String remark,String taxId,String contactMobile,String contact)throws Exception {
+    Map add(String loginName,String displayName,String password,String gender,String birthdate,String  cmbProvince,String cmbCity,String  cmbArea,String remark)throws Exception {
         Map result = new HashMap();
         Customer customer = new Customer();
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         customer.setId(uuid);
         customer.setLoginName(loginName);
         customer.setDisplayName(displayName);
-        customer.setType(type);
-        if (type.equals("1")) {
-           /* customer.setContact(contact);
-            customer.setContactMobile(contactMobile);
-            customer.setTaxId(taxId);*/
-
-        }else{
-            if (StringUtil.isNotEmpty(idNumber)){
-             /*   customer.setIdNumber(idNumber);*/
-            }
+        customer.setPassword(MD5Util.md5(password));
+        customer.setType("0");
+        if (StringUtil.isNotEmpty(gender)){
+            customer.setGender(gender);
         }
+        if (StringUtil.isNotEmpty( birthdate)){
+            customer.setBirthdate(DateUtil.convert2Date(birthdate,"yyyy-MM-dd"));
+        }
+        if (StringUtil.isNotEmpty(cmbProvince)){
+            customer.setProvince(cmbProvince);
+        }
+        if (StringUtil.isNotEmpty(cmbCity)){
+            customer.setCity(cmbCity);
+        }
+        if (StringUtil.isNotEmpty( cmbArea)){
+            customer.setCounty(cmbArea);
+        }
+
         if (StringUtil.isNotEmpty(remark)){
             customer.setRemark(remark);
         }
         customer.setStatus("0");
-        customer.setPassword(MD5Util.md5(password));
+
         customerService.addCustomer(customer);
         result.put("result","success");
          return result;
@@ -175,111 +184,44 @@ public class CustomerController extends BaseController{
      */
     @RequestMapping(value = "/modify")
     public @ResponseBody
-    Map modify(String id,String idNumber,String displayName,String type,String password,String remark,String taxId,String contactMobile,String contact,String status)throws Exception
+    Map modify(String id,String displayName,String password,String gender,String birthdate,String  cmbProvince,String cmbCity,String  cmbArea,String remark,String status)throws Exception
     {
         Map result=new HashMap();
         Customer customer=new Customer();
         customer.setId(id);
         customer.setDisplayName(displayName);
-        if(type.equals("1")){
-            /*customer.setContact(contact);
-            customer.setContactMobile(contactMobile);
-            customer.setTaxId(taxId);*/
-        }else{
-            if (StringUtil.isNotEmpty(idNumber)){
-              /*  customer.setIdNumber(idNumber);*/
-            }
+        if (StringUtil.isNotEmpty(gender)){
+            customer.setGender(gender);
         }
+        if (StringUtil.isNotEmpty( birthdate)){
+            customer.setBirthdate(DateUtil.convert2Date(birthdate, "yyyy-MM-dd"));
+        }
+        if (StringUtil.isNotEmpty(cmbProvince)){
+            customer.setProvince(cmbProvince);
+        }
+        if (StringUtil.isNotEmpty(cmbCity)){
+            customer.setCity(cmbCity);
+        }
+        if (StringUtil.isNotEmpty( cmbArea)){
+            customer.setCounty(cmbArea);
+        }
+
         if (StringUtil.isNotEmpty(remark)) {
             customer.setRemark(remark);
         }
-        if (StringUtil.isNotEmpty(password)) {
-            customer.setPassword(MD5Util.md5(password));
+        if (StringUtil.isNotEmpty(status)){
+          customer.setStatus(status);
         }
-        customer.setStatus(status);
+        if (StringUtil.isNotEmpty(password)){
+                customer.setPassword(MD5Util.md5(password));
+        }
 
         customerService.modifyCustomer(customer);
         result.put("result","success");
         return result;
     }
-    /**
-     *有效乘客列表
-     * @param
-     *
-     * @return listCar json
-     */
-    @RequestMapping(value = "/validList")
-    public @ResponseBody
-    List<Customer> validList(String type)throws Exception
-    {
-        List<Customer> list=  customerService.getAllValidCustomer(type);
-        return list;
-    }
-
-    @RequestMapping(value="/export")
-    public ModelAndView export(ModelMap model, HttpServletRequest request, HttpServletResponse response,
-                               HttpSession session,String type) {
-        ViewExcel viewExcel = new ViewExcel();
-        Map obj = new HashMap();
-
-        String displayName,loginName,status;
-        displayName=(String)session.getAttribute("displayName");
-        loginName=(String)session.getAttribute("loginName");
-        status=(String)session.getAttribute("status");
-        Customer customer=new Customer();
-        if(StringUtil.isNotEmpty(loginName)) {
-            customer.setLoginName(loginName);
-            session.removeAttribute("loginName");
-
-        }
-        if(StringUtil.isNotEmpty(displayName)) {
-            customer.setDisplayName(displayName);
-            session.removeAttribute("displayName");
-
-        }
-        customer.setType(type);
-        if(StringUtil.isNotEmpty(status)) {
-            if(!status.equals("-1")){
-                customer.setStatus(status);
-                session.removeAttribute("status");
-            }
-        }
-        List<Customer> list=customerService.getCustomerPageByEntity(customer);
-
-        String[] personHeaders={"登录名", "显示名","身份证号","状态","备注"};
-        String[] enterpriseHeaders={"登录名", "显示名","企业税号","联系人","联系电话","状态","备注"};
-
-        String[] p_ds_titles = { "loginName", "displayName", "idNumber","status","remark"};
-        String[] e_ds_titles = { "loginName", "displayName", "taxId","contact","contactMobile","status","remark"};
 
 
-
-        int[] p_ds_format = { 1, 1, 1,1,1};
-        int[] e_ds_format = { 1, 1, 1,1,1,1,1};
-        List<Map<String,Object>> data =new ArrayList<Map<String,Object>>();
-        //if(CollectionUtils.isNotEmpty(dataset)){
-        for(Customer c :list){
-            Map<String,Object> map = new HashMap<String,Object>();
-            map.put("loginName", c.getLoginName());
-            map.put("displayName", c.getDisplayName());
-
-            map.put("status", Status.getName(Integer.parseInt(c.getStatus())) );
-            map.put("remark", c.getRemark());
-            data.add(map);
-        }
-        // }
-        String filename="customer.xls";
-        obj.put("filename",filename);
-        try {
-            HSSFWorkbook  workbook=null;
-
-            viewExcel.buildExcelDocument(obj, workbook, request, response);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return new ModelAndView(viewExcel, model);
-    }
 
     public ICustomerService getCustomerService() {
         return customerService;

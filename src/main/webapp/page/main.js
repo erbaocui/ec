@@ -1,9 +1,21 @@
 var SystemMenu =null;
+
+function getContextPath() {
+	// 获取当前网址，如：http://localhost:8080/ssm/index.jsp
+	var currentPath = window.document.location.href;
+	var pathName = window.document.location.pathname;
+	var pos = currentPath.indexOf(pathName);
+	var localhostPath = currentPath.substring(0, pos);
+
+	var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+
+	return(localhostPath + projectName);
+}
 var mainPlatform = {
 
 	init: function(){
-		document.getElementById("ww").style.display="none";
-		SystemMenu=$.parseJSON($.ajax({url:"http://localhost:8080/ec/admin/menua.do",async:false}).responseText);
+		document.getElementById("topbtns").style.display="none";
+		SystemMenu=$.parseJSON($.ajax({url: getContextPath()+"/admin/menua.do",async:false}).responseText);
 		this.bindEvent();
 		this._createTopMenu();
 	},
@@ -119,7 +131,7 @@ var mainPlatform = {
 
         			if(r) {
 
-        				window.location.href = 'login.html';
+        				window.location.href = getContextPath()+"/admin/logout.do";
 
         			}
 
@@ -306,7 +318,7 @@ var mainPlatform = {
 	    	if($(e.target).closest('li').size() > 0 || $(e.target).is('li')){
 	    		$('#mm').menu('show', {
 		             left: e.pageX,
-		             top: e.pageY,
+		             top: e.pageY
 		         });
 	    		var subtitle = $(e.target).closest('li').size() ? $(e.target).closest('li') : $(e.target);
         		$('#mm').data("currtab",subtitle.text());

@@ -58,13 +58,17 @@ public class Menu {
 
     private String isLeaf;
 
-    public Menu(String id, String name, Integer seq, String parentId, String url, String icon,String isLeaf) {
+    private Integer current;
+
+    public Menu(String id, String name, Integer seq, String parentId, String url, String icon,String isLeaf,Integer current) {
         this.id = id;
         this.name = name;
         this.seq = seq;
         this.parentId = parentId;
         this.url = url;
         this.icon = icon;
+        this.isLeaf=isLeaf;
+        this.current=current;
     }
 
     /**
@@ -158,5 +162,13 @@ public class Menu {
 
     public String getParentId() {
         return parentId;
+    }
+
+    public Integer getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Integer current) {
+        this.current = current;
     }
 }

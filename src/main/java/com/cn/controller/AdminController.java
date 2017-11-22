@@ -1,5 +1,6 @@
 package com.cn.controller;
 
+import com.cn.model.Role;
 import com.cn.model.RoleMenu;
 import com.cn.model.User;
 import com.cn.service.IRoleService;
@@ -56,6 +57,20 @@ public class AdminController extends BaseController{
         this.logger = logger;
     }
 
+    @RequestMapping(value="/main")
+    public ModelAndView main(HttpSession session) throws Exception{
+        ModelAndView modelAndView = new ModelAndView();
+        //User user=(User)session.getAttribute("loginUser");
+        User user=new User();
+        user.setId("745e706be84140c8a93c181497ef3c7d");
+        user.setLoginName("admin");
+        user.setDisplayName("管理员");
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("/main");
+        return modelAndView;
+    }
+
+
     /**
      * 登录
      * @param session
@@ -71,6 +86,8 @@ public class AdminController extends BaseController{
         //在Session里保存信息
         User user=new User();
         user.setLoginName(userName);
+        Role role=new Role();
+        user.setRole(role);
         User u=userService.getUserByEntity(user);
         ModelAndView modelAndView = new ModelAndView();
         if(null!=u&&u.getPassword().equals(MD5Util.md5(password))){
@@ -83,18 +100,6 @@ public class AdminController extends BaseController{
 
         return modelAndView;
 
-    }
-    @RequestMapping(value="/main")
-    public ModelAndView main(HttpSession session) throws Exception{
-        ModelAndView modelAndView = new ModelAndView();
-        User user=(User)session.getAttribute("loginUser");
-        /*User user=new User();
-        user.setId("1");
-        user.setLoginName("zf");
-        user.setDisplayName("张飞");*/
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("/main");
-        return modelAndView;
     }
 
 
@@ -195,8 +200,8 @@ public class AdminController extends BaseController{
         User user=(User)session.getAttribute("loginUser");
         RoleMenu roleMenu=new RoleMenu();
         roleMenu.setMenuId(parentId);
-        //roleMenu.setRoleId(user.getRoleId());
-        roleMenu.setRoleId("b89a21ffe0044a7f82112e2d686949aa");
+        roleMenu.setRoleId(user.getRole().getId());
+        //roleMenu.setRoleId("b89a21ffe0044a7f82112e2d686949aa");
         roleMenu.setMenuId(parentId);
 
 
@@ -208,6 +213,11 @@ public class AdminController extends BaseController{
             oneLeveItem.setIcon(menu.getIcon());
             oneLeveItem.setHref(request.getContextPath()+"/"+menu.getUrl());
             oneLeveItem.setIsCurrent(Boolean.valueOf(menu.getIsLeaf()));
+            if(menu.getDeafult().equals(0)){
+                oneLeveItem.setIsCurrent(true);
+            }else{
+                oneLeveItem.setIsCurrent(false);
+            }
             roleMenu.setMenuId(menu.getId());
             List<MenuEx> leafList=roleService.queryRoleMenuShowByEntity(roleMenu);
             List<MenuItem> twoLeveChildren=new ArrayList<MenuItem>();
@@ -215,8 +225,13 @@ public class AdminController extends BaseController{
                 MenuItem  twoLeveItem =new MenuItem();
                 twoLeveItem.setTitle(leaf.getName());
                 twoLeveItem.setIcon(leaf.getIcon());
-                twoLeveItem.setHref(request.getContextPath()+"/"+leaf.getUrl());
-                twoLeveItem.setIsCurrent(Boolean.valueOf(leaf.getIsLeaf()));
+                twoLeveItem.setHref(request.getContextPath() + "/" + leaf.getUrl());
+                if(leaf.getDeafult().equals(0)){
+                    twoLeveItem.setIsCurrent(true);
+                }else{
+                    twoLeveItem.setIsCurrent(false);
+                }
+
 
                 twoLeveChildren.add(twoLeveItem);
             }

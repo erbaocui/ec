@@ -148,8 +148,13 @@ $(document).ready(function(){
 //open图片设置
 function openPics(index){
     var row = $('#dg').datagrid('getData').rows[index];
-    window.open(getContextPath ()+"/picture/picture.do?type=1&relationName="+row.name+"&relationId="+row.id);
-
+   // window.open(getContextPath ()+"/picture/picture.do?type=1&relationName="+row.name+"&relationId="+row.id);
+    var open=getContextPath ()+"/picture/picture.do?type=1&relationName="+row.name+"&relationId="+row.id;
+    parent.$('.easyui-tabs1[arrindex='+ index +']').tabs('add',{
+        title:"图片管理",
+        content: '<iframe class="page-iframe" src="'+open +'" frameborder="no" border="no" height="100%" width="100%" scrolling="auto"></iframe>',
+        closable: true
+    });
 }
 
 

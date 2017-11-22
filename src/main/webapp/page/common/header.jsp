@@ -11,7 +11,8 @@ link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/js/jq
 
 <link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/uimaker/easyui.css" />
 <link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/uimaker/css/base.css" />
-<link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/uimaker/icon.css" />
+<%--<link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/uimaker/icon.css" />--%>
+
 
 <%--<link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/uimaker/panel.css" />--%>
 
@@ -123,6 +124,21 @@ link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/js/jq
             minute = minute < 10 ? ('0' + minute) : minute;
             second = second < 10 ? ('0' + second) : second;
             return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+
+        },
+
+        day: function (value, rec, index) {
+            if (value == null) {
+                return "";
+            }
+            var date = new Date(value);
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            m = m < 10 ? ('0' + m) : m;
+            var d = date.getDate();
+            d = d < 10 ? ('0' + d) : d;
+
+            return y + '-' + m + '-' + d;
 
         },
      /*   status: function (value, rec, index) {
