@@ -4,10 +4,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+    <link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/js/plugins/uploadfiy/uploadify.css" />
     <%@include file="/page/common/header.jsp"%><!--静态包含-->
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/uploadfiy/jquery.uploadify.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/page/picture/list.js"></script>
-    <script type="text/javascript" src="list.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/page/commodity/list.js"></script>
+
 
 </head>
 <body style="margin:1px;">
@@ -40,7 +41,7 @@
 </div>
 
 <div id="dlg" class="easyui-dialog"
-     style="width: 400px;height:350px;padding: 10px 20px" closed="true"
+     style="width: 600px;height:550px;padding: 10px 20px" closed="true"
      buttons="#dlg-buttons">
     <form id="fm" method="post">
         <input type="hidden" id="id" name="id">
@@ -72,19 +73,55 @@
                             <option value="1">无效</option>
                         </select>
                     </td>
-                </tr>
-            <tr>
+             </tr>
+            <tr >
+                <td>正品保障：</td>
+                <td>
+                    <select id="certified" name="certified"  class="easyui-combobox"  data-options="multiple: false,editable: false,width :100,panelHeight :'auto'">
 
-                <td>简&nbsp;&nbsp;&nbsp;介：</td>
-                <td><input type="text" iclass="easyui-textbox" id="brief" name="brief" disabled="disabled"/></textarea>&nbsp;</td>
+                        <option value="0">不支持</option>
+                        <option value="1">支持</option>
+                    </select>
+                </td>
+            </tr>
+            <tr >
+                <td>急速退款：</td>
+                <td>
+                    <select id="speedRefund" name="speedRefund"  class="easyui-combobox"  data-options="multiple: false,editable: false,width :100,panelHeight :'auto'">
+
+                        <option value="0">不支持</option>
+                        <option value="1">支持</option>
+                    </select>
+                </td>
+            </tr>
+            <tr >
+                <td>七日退换：</td>
+                <td>
+                    <select id="sevenReturn" name="sevenReturn"  class="easyui-combobox"  data-options="multiple: false,editable: false,width :100,panelHeight :'auto'">
+
+                        <option value="0">不支持</option>
+                        <option value="1">支持</option>
+                    </select>
+                </td>
             </tr>
 
-            <tr>
 
+            <tr>
                 <td>备&nbsp;&nbsp;&nbsp;注：</td>
                 <td><textarea id="remark" name="remark"></textarea>&nbsp;</td>
             </tr>
-
+            <tr>
+                <td>京东url：</td>
+                <td><input type="text" class="easyui-textbox" id="urlJd" name="urlJd" /></td>
+            </tr>
+            <tr>
+                <td>天猫url：</td>
+                <td><input type="text" id="urlTmall" name="urlTmall" class="easyui-textbox"  /></td>
+            </tr>
+            <tr>
+                <td>简&nbsp;&nbsp;&nbsp;介：</td>
+                <td><input type="text" id="brief" name="brief"   size="40" readonly="readonly" /></td>
+            </tr>
 
         </table>
         <table>
@@ -99,11 +136,13 @@
                     <input type="file" name="uploadify" id="uploadify" />
                 </td>
             </tr>
+        </table>
 
     </form>
 </div>
 
 
+<%--
 <div id="mapDialog" class="easyui-dialog"
      style="width:1200px;height:900px;padding: 10px 20px" closed="true"
      buttons="#mapDlg-buttons">
@@ -114,15 +153,17 @@
     <input type="text" id="address" name="address" size="20" />
 
 </div>
+<div id="mapDlg-buttons">
+    <a id="mapSaveDialog" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
+    <a id="mapCloseDialog" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+</div>
+--%>
 
 
 <div id="dlg-buttons" >
     <a id="saveDialog" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
     <a id="closeDialog" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 </div>
-<div id="mapDlg-buttons">
-    <a id="mapSaveDialog" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
-    <a id="mapCloseDialog" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
-</div>
+
 </body>
 </html>

@@ -8,4 +8,6 @@ public interface IQiniuService {
 
 	public void upload(byte[] localData, String remoteFileName) throws IOException;
 
+	public String getUpToken()throws IOException;
+
 }

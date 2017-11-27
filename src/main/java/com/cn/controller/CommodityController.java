@@ -117,7 +117,8 @@ public class CommodityController extends BaseController{
      */
     @RequestMapping(value = "/add")
     public @ResponseBody
-    Map add(String name,String brief,String remark,BigDecimal price,Integer seq)throws Exception
+    Map add(String name,String brief,String remark,BigDecimal price,Integer seq,String urlJd,String urlTmall,String certified,
+            String speedRefund,String sevenReturn)throws Exception
     {
         Map result=new HashMap();
         Commodity commodity=new Commodity();
@@ -133,7 +134,17 @@ public class CommodityController extends BaseController{
         if(StringUtil.isNotEmpty( remark)) {
             commodity.setRemark(remark);
         }
+
+        if(StringUtil.isNotEmpty( urlJd)) {
+            commodity.setUrlJd( urlJd);
+        }
+        if(StringUtil.isNotEmpty( urlTmall)) {
+            commodity.setUrlTmall( urlTmall);
+        }
         commodity.setStatus(String.valueOf(Status.EFFECTIVE.getIndex()));
+        commodity.setCertified(certified);
+        commodity.setSpeedRefund(speedRefund);
+        commodity.setSevenReturn(sevenReturn);
         commodityService.addCommodity(commodity);
         result.put("result","success");
          return result;
@@ -147,13 +158,16 @@ public class CommodityController extends BaseController{
      */
     @RequestMapping(value = "/modify")
     public @ResponseBody
-    Map modify(String id,String status,String remark)throws Exception
+    Map modify(String id,String status,String brief,String remark,String urlJd,String urlTmall,String certified,
+               String speedRefund,String sevenReturn)throws Exception
     {
         Map result=new HashMap();
         Commodity commodity=new Commodity();
 
         commodity.setId(id);
-       
+        if(StringUtil.isNotEmpty(brief)) {
+            commodity.setBrief(brief);
+        }
 
         if(StringUtil.isNotEmpty( remark)) {
             commodity.setRemark(remark);
@@ -161,7 +175,15 @@ public class CommodityController extends BaseController{
         if(StringUtil.isNotEmpty(status)) {
             commodity.setStatus(status);
         }
-
+        if(StringUtil.isNotEmpty( urlJd)) {
+            commodity.setUrlJd( urlJd);
+        }
+        if(StringUtil.isNotEmpty( urlTmall)) {
+            commodity.setUrlTmall( urlTmall);
+        }
+        commodity.setCertified(certified);
+        commodity.setSpeedRefund(speedRefund);
+        commodity.setSevenReturn(sevenReturn);
         commodityService.modifyCommodity(commodity);
         result.put("result","success");
         return result;

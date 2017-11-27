@@ -24,6 +24,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.net.URLDecoder;
 import java.util.*;
 
 
@@ -71,6 +72,11 @@ public class TestController extends BaseController{
         return "test";
 
 
+    }
+
+    public static void main(String args[])throws Exception{
+        String param="http://47.95.1.213:8080/ecapi/customer/update.do?lang=zh&q=%7B%22name%22%3A%22mlj04%22%2C%22county%22%3A%22%E5%BE%90%E6%B1%87%E5%8C%BA%22%2C%22header%22%3A%22http%3A%5C%2F%5C%2Foyz6r2siu.bkt.clouddn.com%5C%2Fuserheader_android_c0c52a0234cc4b3bb9584ddd3083268b_201711271839272770.jpg%22%2C%22gender%22%3A0%2C%22province%22%3A%22%E4%B8%8A%E6%B5%B7%22%2C%22birthdate%22%3A372960000000%2C%22city%22%3A%22%E5%B8%82%E8%BE%96%E5%8C%BA%22%7D";
+        System.out.println(URLDecoder.decode(param, "UTF-8"));
     }
 
 

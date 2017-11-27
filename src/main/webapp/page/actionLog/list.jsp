@@ -70,6 +70,12 @@
                 </td>
             </tr>
             <tr >
+                <td>IP：</td>
+                <td><input type="text" id="loginIp"  name="loginIp" size="50" disabled="disabled"/>&nbsp;
+
+                </td>
+            </tr>
+            <tr >
                 <td>执行时间：</td>
                 <td><input type="text" id="executeTime"  name="executeTime" size="50" disabled="disabled"/>&nbsp;
 

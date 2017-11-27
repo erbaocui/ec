@@ -24,10 +24,12 @@ $(document).ready(function(){
             },
 
             {field:'remark',title:'备注',width:100,align:'center'},
-            {field:'_opation',title:"操作",width:"10%",align:'center',
+            {field:'_opation',title:"操作",width:"20%",align:'center',
                 formatter:function(value,row,index){
                     var str="";
-                        str+='<a href="#" class="easyui-linkbutton" onclick=" openPics(\''+index+'\')">图片</a>';
+                         str+='<a href="#" class="easyui-linkbutton" onclick="openbrief(\''+index+'\')">简介图片</a>';
+                        str+='| <a href="#" class="easyui-linkbutton" onclick="openPics(\''+index+'\')">图片管理</a>';
+                        str+='| <a href="#" class="easyui-linkbutton" onclick="openthumbs(\''+index+'\')">缩略图管理</a>';
                     return str;
                 }
 
@@ -89,6 +91,9 @@ $(document).ready(function(){
 
         $("#fm").form('clear');
         initUpload();
+        $("#certified").combobox("setValue",0);
+        $("#speedRefund").combobox("setValue",0);
+        $("#sevenReturn").combobox("setValue",0);
         $("#statusDisplay").hide();
         $('#name').attr("disabled","disabled");
         $('#name').validatebox('reduce');
@@ -99,18 +104,21 @@ $(document).ready(function(){
     });
     //编辑窗口
     $('#openModifyDialog').click(function(){
+        initUpload()
         var selectedRows = $("#dg").datagrid('getSelections');
         if (selectedRows.length != 1) {
             $.messager.alert("系统提示", "请选择一条要编辑的数据！");
             return;
         }
         var row = selectedRows[0];
+        $("#fm").form('clear');
         $('#fm').form('load', row);
-        $("#status").combobox('select', row.status);
-        $("#statusDisplay").show();
+        $("#showImg").attr("src",row.brief);
         $('#name').attr("disabled","false");
         $('#name').validatebox('remove');
-        url = getContextPath ()+"/commodity/modify.do";
+        $("#status").combobox('select', row.status);
+        $("#statusDisplay").show();
+         url = getContextPath ()+"/commodity/modify.do";
          $("#dlg").dialog({title: "编辑商品信息",modal:true});
          $("#dlg").dialog("open");
     });
@@ -150,12 +158,29 @@ $(document).ready(function(){
 function openPics(index){
     var row = $('#dg').datagrid('getData').rows[index];
    // window.open(getContextPath ()+"/picture/picture.do?type=1&relationName="+row.name+"&relationId="+row.id);
-    var open=getContextPath ()+"/picture/picture.do?type=1&relationName="+row.name+"&relationId="+row.id;
+   var open=getContextPath ()+"/picture/picture.do?type=1&relationName="+row.name+"&relationId="+row.id;
     parent.$('.easyui-tabs1[arrindex='+ index +']').tabs('add',{
-        title:"图片管理",
+        title:"商品图片管理",
         content: '<iframe class="page-iframe" src="'+open +'" frameborder="no" border="no" height="100%" width="100%" scrolling="auto"></iframe>',
         closable: true
     });
+}
+//open图片设置
+function openthumbs(index){
+    var row = $('#dg').datagrid('getData').rows[index];
+    //window.open(getContextPath ()+"/picture/picture.do?type=2&relationName="+row.name+"&relationId="+row.id);
+    var open=getContextPath ()+"/picture/picture.do?type=2&relationName="+row.name+"&relationId="+row.id;
+    parent.$('.easyui-tabs1[arrindex='+ index +']').tabs('add',{
+        title:"商品缩略图管理",
+        content: '<iframe class="page-iframe" src="'+open +'" frameborder="no" border="no" height="100%" width="100%" scrolling="auto"></iframe>',
+        closable: true
+    });
+}
+//简介图片
+function  openbrief(index){
+    var row = $('#dg').datagrid('getData').rows[index];
+    window.open(getContextPath ()+"/page/picture/detail.jsp?url="+row.brief);
+
 }
 
 function initUpload(){
@@ -190,9 +215,9 @@ function initUpload(){
             return false;
         },
         'onUploadSuccess' : function(file,data,response) {//上传完成时触发（每个文件触发一次）
-
+            $("#brief").val(data);
             $("#showImg").attr("src",data);
-            $("#url").val(data);
+
         }
     });
 }

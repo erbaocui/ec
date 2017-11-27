@@ -67,8 +67,8 @@ public class PictureController extends BaseController{
         if(PicType.MERCHANT.getIndex()==Integer.valueOf(type)){
             typeName="商家";
         }
-        if(PicType.USERHEAD.getIndex()==Integer.valueOf(type)){
-            typeName="客户头像";
+        if(PicType.COMMODITY_THUMB.getIndex()==Integer.valueOf(type)){
+            typeName="商品缩略图";
         }
         modelAndView.addObject( "typeName" ,typeName);
         modelAndView.addObject( "relationName" ,relationName);

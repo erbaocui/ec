@@ -21,7 +21,7 @@ link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/js/jq
 <link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/uimaker/dialog.css" />
 <link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/uimaker/combobox.css" />
 
-<link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/js/plugins/uploadfiy/uploadify.css" />
+
 
 
 <%----%>

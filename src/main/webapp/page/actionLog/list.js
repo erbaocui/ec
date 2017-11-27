@@ -11,16 +11,18 @@ $(document).ready(function(){
         method:"post",
         columns:[[
             {field:'id',title:'',width:0,hidden:true},
-            {field:'actionTime',title:'请求时间',width:"12%", formatter:commonFormatter.time},
+            {field:'actionTime',title:'请求时间',width:"10%", formatter:commonFormatter.time},
+
             {field:'loginName',title:'登录名',width:"8%"},
             {field:'actionUrl',title:'请求url',width:"15%"},
+            {field:'loginIp',title:'ip',width:"6%"},
             {field:'token',title:'token',width:"17%"},
 
             {field: 'status', title: '状态', width:"3%",
                 formatter: commonFormatter.status
             },
-            {field:'requestParam',title:'请求参数',width:"20%"},
-            {field:'responseParam',title:'返回参数',width:"20%"},
+            {field:'requestParam',title:'请求参数',width:"18%"},
+            {field:'responseParam',title:'返回参数',width:"18%"},
             {field:'_opation',title:"操作",width:"4%",align:'center',
                 formatter:function(value,row,index){
                     return '<a href="#" class="easyui-linkbutton" onclick="showloginfo(\''+index+'\')">详情</a>';

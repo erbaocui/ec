@@ -4,7 +4,7 @@ package com.cn.constant;
  * Created by home on 2017/7/22.
  */
 public enum PicType {
-    MERCHANT("MERCHANT", 0),COMMODITY("COMMODITY", 1),USERHEAD("USERHEAD",2);
+    MERCHANT("MERCHANT", 0),COMMODITY("COMMODITY", 1),COMMODITY_THUMB("COMMODITY_THUMB", 2);
     // 成员变量
     private String name;
     private int index;
