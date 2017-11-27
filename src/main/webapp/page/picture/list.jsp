@@ -98,7 +98,7 @@
             <tr>
 
 
-                <td>   <img id="showImg" src="http://oyz6r2siu.bkt.clouddn.com/50e8f39241314bbb85248a4103fa07d7.jpg" style="width:200px;height:100px;padding: 10px 20px"></td>
+                <td>   <img id="showImg" src="" style="width:200px;height:100px;padding: 10px 20px"></td>
             </tr>
             <tr>
                 <td colspan="2">

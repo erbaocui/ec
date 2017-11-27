@@ -7,6 +7,7 @@
     <%@include file="/page/common/header.jsp"%><!--静态包含-->
     <script type="text/javascript" src="list.js"></script>
 
+
 </head>
 <body style="margin:1px;">
 <table id="dg">
