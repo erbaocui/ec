@@ -88,6 +88,7 @@ $(document).ready(function(){
     $('#openAddDialog').click(function(){
 
         $("#fm").form('clear');
+        initUpload();
         $("#statusDisplay").hide();
         $('#name').attr("disabled","disabled");
         $('#name').validatebox('reduce');
@@ -156,6 +157,48 @@ function openPics(index){
         closable: true
     });
 }
+
+function initUpload(){
+    $("#uploadify").uploadify({
+        'swf' : getContextPath()+'/js/plugins/uploadfiy/uploadify.swf',
+
+        'uploader' :getContextPath()+'/file/upload.do',//flash文件的相对路径
+        'fileDataName':"Filedata", 						//设置上传文件名称,默认为Filedata
+        //'cancelImg': 'images/cancel.png', 			//每一个文件上的关闭按钮图标
+        'queueID': 'fileQueue', 					//文件队列的ID，该ID与存放文件队列的div的ID一致
+        'queueSizeLimit': 1, 							//当允许多文件生成时，设置选择文件的个数，默认值：999
+        'fileDesc': '*.jpg;*.gif;*.png;*.ppt;*.pdf;*.jpeg', 	//用来设置选择文件对话框中的提示文本
+        'fileExt': '*.jpg;*.gif;*.png;*.ppt;*.pdf;*.jpeg', 		//设置可以选择的文件的类型
+        'auto': true, 								//设置为true当选择文件后就直接上传了，为false需要点击上传按钮才上传
+        'multi': false, 								//设置为true时可以上传多个文件
+        'simUploadLimit': 1, 						//允许同时上传的个数 默认值：1
+        'sizeLimit': 2048000,						//上传文件的大小限制
+        'buttonText': '上传图片',						//浏览按钮的文本，默认值：BROWSE
+        'displayData': 'percentage',     			//上传队列显示的数据类型，percentage是百分比，speed是上传速度
+        //回调函数
+        'onComplete': function (evt, queueID, fileObj, response, data) {
+
+        },
+        'onError': function (event, queueID, fileObj, errorObj) {
+            if (errorObj.type === "File Size") {
+                alert("文件最大为3M");
+                $("#uploadify").uploadifyClearQueue();
+            }
+        },
+        'onQueueFull': function (event, queueSizeLimit) {
+            alert("最多上传" + queueSizeLimit + "张图片");
+            return false;
+        },
+        'onUploadSuccess' : function(file,data,response) {//上传完成时触发（每个文件触发一次）
+
+            $("#showImg").attr("src",data);
+            $("#url").val(data);
+        }
+    });
+}
+
+
+
 
 
 

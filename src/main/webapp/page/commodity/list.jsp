@@ -5,6 +5,8 @@
 <html>
 <head>
     <%@include file="/page/common/header.jsp"%><!--静态包含-->
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/uploadfiy/jquery.uploadify.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/page/picture/list.js"></script>
     <script type="text/javascript" src="list.js"></script>
 
 </head>
@@ -74,7 +76,7 @@
             <tr>
 
                 <td>简&nbsp;&nbsp;&nbsp;介：</td>
-                <td><textarea id="brief" name="brief"   class="easyui-validatebox" data-options="required: true"></textarea>&nbsp;</td>
+                <td><input type="text" iclass="easyui-textbox" id="brief" name="brief" disabled="disabled"/></textarea>&nbsp;</td>
             </tr>
 
             <tr>
@@ -85,6 +87,19 @@
 
 
         </table>
+        <table>
+            <tr>
+
+
+                <td>   <img id="showImg" src="" style="width:200px;height:100px;padding: 10px 20px"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div id="fileQueue"></div>
+                    <input type="file" name="uploadify" id="uploadify" />
+                </td>
+            </tr>
+
     </form>
 </div>
 
