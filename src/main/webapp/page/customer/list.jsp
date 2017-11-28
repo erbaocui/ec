@@ -13,7 +13,7 @@
 
 <table id="dg">
 </table>
-<div id="tb">
+<div id="tb" style="padding:0 30px;">
     <div>
         <form id="qf">
         <tabel>

@@ -85,7 +85,7 @@
             <property name="rootInterface" value=""/>
 
         </javaClientGenerator>
-        <table tableName="t_customer" domainObjectName="Customer" enableCountByExample="false" enableUpdateByExample="false"
+        <table tableName="t_feedback" domainObjectName="Feedback" enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
 
         <!--

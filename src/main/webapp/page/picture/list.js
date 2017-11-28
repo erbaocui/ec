@@ -40,6 +40,11 @@ $(document).ready(function(){
             "relationId":$("#qryRelationId").val(),
             "status":$("#qryStatus").combobox('getValue')
         },
+        onLoadError: function (data) {
+            if(data.responseText=="loseSession"){
+                window.location.href=getContextPath()+"/page/login.jsp"
+            }
+        },
         onLoadSuccess: function (data) {
             if (data.total == 0) {
                 if($("input[type='checkbox']")[0]!=null) {

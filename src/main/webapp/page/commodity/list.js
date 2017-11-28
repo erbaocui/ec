@@ -48,6 +48,11 @@ $(document).ready(function(){
             "name": $("#qryName").val(),
             "status":$("#qryStatus").combobox('getValue')
         },
+        onLoadError: function (data) {
+            if(data.responseText=="loseSession"){
+                window.location.href=getContextPath()+"/page/login.jsp"
+            }
+        },
         onLoadSuccess: function (data) {
             if (data.total == 0) {
                 if($("input[type='checkbox']")[0]!=null) {
@@ -262,8 +267,8 @@ function initUpload(){
             return false;
         },
         'onUploadSuccess' : function(file,data,response) {//上传完成时触发（每个文件触发一次）
-            $("#imgUrl").val(data);
-            $("#showImg").attr("src",data);
+            $("#imgUrl").val("http://"+data);
+            $("#showImg").attr("src","http://"+data);
 
         }
     });

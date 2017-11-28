@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 
 /**
  * 登录认证的拦截器
@@ -51,10 +52,17 @@ public class LoginInterceptor implements HandlerInterceptor{
         if(user != null){
             return true;
         }
-        //不符合条件的，跳转到登录界面
-        request.getRequestDispatcher("/page/login.jsp").forward(request, response);
+        if (request.getHeader("x-requested-with") != null && request.getHeader("x-requested-with").equalsIgnoreCase("XMLHttpRequest")){ //如果是ajax请求响应头会有x-requested-with
+            PrintWriter out = response.getWriter();
+            out.print("loseSession");//session失效
+            out.flush();
+            return false;}
+        else {
+            //不符合条件的，跳转到登录界面
+            request.getRequestDispatcher("/page/login.jsp").forward(request, response);
 
-        return false;
+            return false;
+        }
     }
 
 }
