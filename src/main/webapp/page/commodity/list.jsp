@@ -41,7 +41,7 @@
 </div>
 
 <div id="dlg" class="easyui-dialog"
-     style="width: 600px;height:550px;padding: 10px 20px" closed="true"
+     style="width: 600px;height:400px;padding: 10px 20px" closed="true"
      buttons="#dlg-buttons">
     <form id="fm" method="post">
         <input type="hidden" id="id" name="id">
@@ -118,30 +118,45 @@
                 <td>天猫url：</td>
                 <td><input type="text" id="urlTmall" name="urlTmall" class="easyui-textbox"  /></td>
             </tr>
-            <tr>
-                <td>简&nbsp;&nbsp;&nbsp;介：</td>
-                <td><input type="text" id="brief" name="brief"   size="40" readonly="readonly" /></td>
-            </tr>
-
         </table>
-        <table>
-            <tr>
-
-
-                <td>   <img id="showImg" src="" style="width:200px;height:100px;padding: 10px 20px"></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <div id="fileQueue"></div>
-                    <input type="file" name="uploadify" id="uploadify" />
-                </td>
-            </tr>
-        </table>
-
     </form>
 </div>
+<div id="dlg-buttons" >
+    <a id="saveDialog" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
+    <a id="closeDialog" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+</div>
 
-
+<div id="imgDlg" class="easyui-dialog"
+     style="width: 600px;height:450px;padding: 10px 20px" closed="true"
+     buttons="#imgDlg-buttons">
+    <form id="imgFm" method="post">
+        <input type="hidden" id="imgId" name="imgId">
+        <input type="hidden" id="imgBrief" name="imgBrief">
+        <input type="hidden" id="imgThumb" name="imgThumb">
+    <table>
+         <tr>
+                <td id="imgUrlName"></td>
+                <td><input type="text" id="imgUrl" name="imgUrl" size="60"   /></td>
+          </tr>
+         <tr  >
+            <td colspan="2" >   <img id="showImg" src="" style="width:400px;height:200px;padding: 10px 20px"></td>
+         </tr>
+        <tr  >
+            <td colspan="2"  style="width:50px;height:50px"> </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="fileQueue"></div>
+                <input type="file" name="uploadify" id="uploadify" />
+            </td>
+        </tr>
+    </table>
+   </form>
+</div>
+<div id="imgDlg-buttons" >
+    <a id="imgSaveDlg" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
+    <a id="imgCloseDlg" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+</div>
 <%--
 <div id="mapDialog" class="easyui-dialog"
      style="width:1200px;height:900px;padding: 10px 20px" closed="true"
@@ -160,10 +175,7 @@
 --%>
 
 
-<div id="dlg-buttons" >
-    <a id="saveDialog" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
-    <a id="closeDialog" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
-</div>
+
 
 </body>
 </html>

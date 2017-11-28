@@ -2,6 +2,7 @@
  * Created by home on 2017/7/7.
  */
 var url;
+var imgType;
 $(document).ready(function(){
     //表格格式化
     $('#dg').datagrid({
@@ -12,7 +13,6 @@ $(document).ready(function(){
         columns:[[
             {field:'ck',title:'',width:100,checkbox:true},
             {field:'name',title:'商品名称',width:100},
-            {field:'brief',title:'简介',width:100},
             {field:'price',title:'价格',width:100},
             {field:'seq',title:'排序',width:100},
             {field: 'status', title: '状态', width: 100,align:'center',
@@ -29,12 +29,14 @@ $(document).ready(function(){
                     var str="";
                          str+='<a href="#" class="easyui-linkbutton" onclick="openbrief(\''+index+'\')">简介图片</a>';
                         str+='| <a href="#" class="easyui-linkbutton" onclick="openPics(\''+index+'\')">图片管理</a>';
-                        str+='| <a href="#" class="easyui-linkbutton" onclick="openthumbs(\''+index+'\')">缩略图管理</a>';
+                        str+='| <a href="#" class="easyui-linkbutton" onclick="openthumb(\''+index+'\')">缩略图管理</a>';
                     return str;
                 }
 
             },
-            {field:'id',title:'',width:0,hidden:true},
+            {field:'brief',title:'',width:0,hidden:true},
+            {field:'thumb',title:'',width:0,hidden:true},
+            {field:'id',title:'',width:0,hidden:true}
         ]],
         singleSelect: true,//单选
         checkOnSelect:true,
@@ -90,7 +92,6 @@ $(document).ready(function(){
     $('#openAddDialog').click(function(){
 
         $("#fm").form('clear');
-        initUpload();
         $("#certified").combobox("setValue",0);
         $("#speedRefund").combobox("setValue",0);
         $("#sevenReturn").combobox("setValue",0);
@@ -104,7 +105,7 @@ $(document).ready(function(){
     });
     //编辑窗口
     $('#openModifyDialog').click(function(){
-        initUpload()
+        //initUpload()
         var selectedRows = $("#dg").datagrid('getSelections');
         if (selectedRows.length != 1) {
             $.messager.alert("系统提示", "请选择一条要编辑的数据！");
@@ -149,6 +150,41 @@ $(document).ready(function(){
         $("#fm").form('clear');
     });
 
+    //图片保存按钮
+    $('#imgSaveDlg').click(function(){
+        if($("#imgUrl").val()==null||$("#imgUrl").val()==""){
+            $.messager.alert("系统提示", "请先上传图片！");
+            return;
+        }
+        if(imgType=="brief"){
+            $("#imgBrief").val($("#imgUrl").val());
+        }else{
+            $("#imgThumb").val($("#imgUrl").val());
+        }
+        $("#imgFm").form("submit", {
+            url: getContextPath ()+"/commodity/imgModify.do",
+            onSubmit: function () {
+            },
+            success: function (data) {
+                var json = $.parseJSON(data);
+                if (json.result == "success") {
+                    $.messager.alert("系统提示", "保存成功");
+                    $("#imgFm").form('clear');
+                    $("#imgDlg").dialog("close");
+                    $("#dg").datagrid("reload");
+                }else{
+                    $.messager.alert("系统提示", "保存失败");
+                }
+
+            }
+        });
+    });
+    //图片关闭按钮
+    $('#imgCloseDlg').click(function(){
+        $("#imgDlg").dialog("close");
+        $("#imgFm").form('clear');
+    });
+
 });
 
 
@@ -158,28 +194,39 @@ $(document).ready(function(){
 function openPics(index){
     var row = $('#dg').datagrid('getData').rows[index];
    // window.open(getContextPath ()+"/picture/picture.do?type=1&relationName="+row.name+"&relationId="+row.id);
-   var open=getContextPath ()+"/picture/picture.do?type=1&relationName="+row.name+"&relationId="+row.id;
-    parent.$('.easyui-tabs1[arrindex='+ index +']').tabs('add',{
-        title:"商品图片管理",
-        content: '<iframe class="page-iframe" src="'+open +'" frameborder="no" border="no" height="100%" width="100%" scrolling="auto"></iframe>',
+   var openUrl=getContextPath ()+"/picture/picture.do?type=1&relationName="+row.name+"&relationId="+row.id;
+
+    parent.$('.easyui-tabs1[arrindex="'+0+'"]').tabs('add',{
+        title:row.name+"图片管理",
+        content: '<iframe class="page-iframe" src="'+openUrl +'" frameborder="no" border="no" height="100%" width="100%" scrolling="auto"></iframe>',
         closable: true
     });
 }
-//open图片设置
-function openthumbs(index){
+//缩略图设置
+function openthumb(index){
+    initUpload();
+    imgType="thumb";
     var row = $('#dg').datagrid('getData').rows[index];
-    //window.open(getContextPath ()+"/picture/picture.do?type=2&relationName="+row.name+"&relationId="+row.id);
-    var open=getContextPath ()+"/picture/picture.do?type=2&relationName="+row.name+"&relationId="+row.id;
-    parent.$('.easyui-tabs1[arrindex='+ index +']').tabs('add',{
-        title:"商品缩略图管理",
-        content: '<iframe class="page-iframe" src="'+open +'" frameborder="no" border="no" height="100%" width="100%" scrolling="auto"></iframe>',
-        closable: true
-    });
+    $("#imgFm").form('clear');
+    $("#showImg").attr("src",row.thumb);
+    $("#imgId").val(row.id);
+    $("#imgUrl").val(row.thumb);
+    $("#imgUrlName").html("缩略图URL :&nbsp&nbsp")
+    $("#imgDlg").dialog({title: "缩略图管理",modal:true});
+    $("#imgDlg").dialog("open");
 }
 //简介图片
 function  openbrief(index){
+    initUpload();
+    imgType="brief";
     var row = $('#dg').datagrid('getData').rows[index];
-    window.open(getContextPath ()+"/page/picture/detail.jsp?url="+row.brief);
+    $("#imgFm").form('clear');
+    $("#showImg").attr("src",row.brief);
+    $("#imgId").val(row.id);
+    $("#imgUrl").val(row.brief);
+    $("#imgUrlName").html("简介图URL :&nbsp&nbsp")
+    $("#imgDlg").dialog({title: "简介图管理",modal:true});
+    $("#imgDlg").dialog("open");
 
 }
 
@@ -215,7 +262,7 @@ function initUpload(){
             return false;
         },
         'onUploadSuccess' : function(file,data,response) {//上传完成时触发（每个文件触发一次）
-            $("#brief").val(data);
+            $("#imgUrl").val(data);
             $("#showImg").attr("src",data);
 
         }

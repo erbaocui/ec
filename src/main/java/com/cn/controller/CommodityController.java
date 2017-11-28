@@ -117,7 +117,7 @@ public class CommodityController extends BaseController{
      */
     @RequestMapping(value = "/add")
     public @ResponseBody
-    Map add(String name,String brief,String remark,BigDecimal price,Integer seq,String urlJd,String urlTmall,String certified,
+    Map add(String name,String remark,BigDecimal price,Integer seq,String urlJd,String urlTmall,String certified,
             String speedRefund,String sevenReturn)throws Exception
     {
         Map result=new HashMap();
@@ -127,10 +127,7 @@ public class CommodityController extends BaseController{
         commodity.setName(name);
         commodity.setPrice( price);
         commodity.setSeq(seq);
-        if(StringUtil.isNotEmpty(brief)) {
-            commodity.setBrief(brief);
-        }
-        
+
         if(StringUtil.isNotEmpty( remark)) {
             commodity.setRemark(remark);
         }
@@ -158,17 +155,13 @@ public class CommodityController extends BaseController{
      */
     @RequestMapping(value = "/modify")
     public @ResponseBody
-    Map modify(String id,String status,String brief,String remark,String urlJd,String urlTmall,String certified,
+    Map modify(String id,String status,String remark,String urlJd,String urlTmall,String certified,
                String speedRefund,String sevenReturn)throws Exception
     {
         Map result=new HashMap();
         Commodity commodity=new Commodity();
 
         commodity.setId(id);
-        if(StringUtil.isNotEmpty(brief)) {
-            commodity.setBrief(brief);
-        }
-
         if(StringUtil.isNotEmpty( remark)) {
             commodity.setRemark(remark);
         }
@@ -184,6 +177,32 @@ public class CommodityController extends BaseController{
         commodity.setCertified(certified);
         commodity.setSpeedRefund(speedRefund);
         commodity.setSevenReturn(sevenReturn);
+        commodityService.modifyCommodity(commodity);
+        result.put("result","success");
+        return result;
+    }
+
+
+    /**
+     * 商品缩略图简介图编辑
+     * @param
+     *
+     * @return map json
+     */
+    @RequestMapping(value = "/imgModify")
+    public @ResponseBody
+    Map modify(String imgId,String imgThumb,String imgBrief)throws Exception
+    {
+        Map result=new HashMap();
+        Commodity commodity=new Commodity();
+
+        commodity.setId(imgId);
+        if(StringUtil.isNotEmpty( imgThumb)) {
+            commodity.setThumb(imgThumb);
+        }
+        if(StringUtil.isNotEmpty( imgBrief)) {
+            commodity.setBrief(imgBrief);
+        };
         commodityService.modifyCommodity(commodity);
         result.put("result","success");
         return result;
