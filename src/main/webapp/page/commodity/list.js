@@ -267,8 +267,8 @@ function initUpload(){
             return false;
         },
         'onUploadSuccess' : function(file,data,response) {//上传完成时触发（每个文件触发一次）
-            $("#imgUrl").val("http://"+data);
-            $("#showImg").attr("src","http://"+data);
+            $("#imgUrl").val(data);
+            $("#showImg").attr("src",data);
 
         }
     });
