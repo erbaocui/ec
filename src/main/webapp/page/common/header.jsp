@@ -45,6 +45,7 @@ link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/js/jq
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/validator/validatorTask.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/validator/validatorRole.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/validator/validatorCommodity.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/validator/validatorVersion.js"></script>
 <%--<script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/datagrid.js"></script>--%>
 <%--
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/uploadfiy/jquery.uploadify.js"></script>

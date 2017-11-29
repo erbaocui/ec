@@ -2,24 +2,25 @@
  * Created by home on 2017/7/7.
  */
 var url;
-var canExport=false;
+
 $(document).ready(function(){
     //表格格式化
     $('#dg').datagrid({
-        title:"客户管理",
+        title:"版本管理",
         toolbar:"#tb",
-        url:getContextPath()+"/customer/list.do",
+        url:getContextPath()+"/version/list.do",
         method:"post",
         columns:[[
             {field:'ck',title:'',width:100,checkbox:true},
-            {field:'loginName',title:'登录名',width:100},
-            {field:'displayName',title:'姓名',width:100},
-            {field:'type',title:'类型',width:100},
-            {field:'gender',title:'性别',width:100},
-            {field:'birthdate',title:'出生日期',width:100,align:'center', formatter:commonFormatter.day},
-            {field:'province',title:'省',width:100,align:'center'},
-            {field:'city',title:'市',width:100,align:'center'},
-            {field:'county',title:'县/区',width:100,align:'center'},
+            {field:'name',title:'名称',width:100},
+            {field:'v',title:'版本',width:100},
+            {field:'type',title:'类型',width:100,
+                formatter: function (value, rec, index) {
+                if (value == 0) return 'Android';
+                if (value == 1) return 'IOS';
+                return '';
+             }
+            },
             {field: 'status', title: '状态', width: 100,align:'center',
                 formatter: function (value, rec, index) {
                     if (value == 0) return '有效';
@@ -27,6 +28,7 @@ $(document).ready(function(){
                     return '';
                 }
             },
+            {field:'createTime',title:'创建时间',width:100,formatter:commonFormatter.time},
             {field:'remark',title:'备注',width:100,align:'center',formatter:commonFormatter.brief},
             {field:'id',title:'',width:100,hidden:true}
         ]],
@@ -37,10 +39,8 @@ $(document).ready(function(){
         stripe:true,	//设置为true将交替显示行背景。
         fitColumns:true, //设置为true将自动使列适应表格宽度以防止出现水平滚动
         queryParams: {
-            "loginName": $("#qryLoginName").val(),
-            "displayName":$("#qryDisplayName").val(),
-            "status":$("#qryStatus").val(),
-            "type":"0"
+            "status":$("#qryStatus").combobox('getValue'),
+            "type":$("#qryType").combobox('getValue')
         },
         onLoadError: function (data) {
             if(data.responseText=="loseSession"){
@@ -78,33 +78,28 @@ $(document).ready(function(){
     //搜索按钮
     $('#search').click(function(){
         $("#dg").datagrid('load', {
-            "loginName": $("#qryLoginName").val(),
-            "displayName":$("#qryDisplayName").val(),
-            "status":$("#qryStatus").val(),
-            "type":"0"
+            "status":$("#qryStatus").combobox('getValue'),
+            "type":$("#qryType").combobox('getValue')
         });
     });
     //重置按钮
     $('#resetBtn').click(function(){
         $("#qf").form('clear');
         $("#qryStatus").combobox("setValue",-1);
+        $("#qryType").combobox("setValue",-1);
     });
 
 
     //新增窗口
     $('#openAddDialog').click(function(){
        $("#fm").form('clear');
-        addressInit('cmbProvince', 'cmbCity', 'cmbArea', '', '', '');
-        $("#checkPasswordDisplay").show();
-        $("#gender").combobox("setValue",0);
-        $("#passwordDisplay").show();
+        $("#type").combobox({disabled: false});
+        $("#type").combobox("setValue",0);
         $("#statusDisplay").hide();
-        $('#loginName').attr("disabled","");
-        $('#loginName').validatebox('reduce');
-        $('#password').validatebox('reduce');
-        $('#checkPassword').validatebox('reduce');
-        url = getContextPath ()+"/customer/add.do";
-        $("#dlg").dialog({title: "添加个人客户信息",modal:true});
+        $('#v').validatebox('reduce');
+        $('#v').attr("disabled","false");
+        url = getContextPath ()+"/version/add.do";
+        $("#dlg").dialog({title: "添加版本信息",modal:true});
         $("#dlg").dialog("open");
     });
     //编辑窗口
@@ -114,25 +109,18 @@ $(document).ready(function(){
             $.messager.alert("系统提示", "请选择一条要编辑的数据！");
             return;
         }
-
         var row = selectedRows[0];
-        if (row.type != 0) {
-            $.messager.alert("系统提示", "只能编辑普通用户！");
-            return;
-        }
         $('#fm').form('load', row);
-        addressInit('cmbProvince', 'cmbCity', 'cmbArea',row.province, row.city, row.county);
-        $("#birthdate").val(commonFormatter.day(row.birthdate,"",""));
-        $("#type").val("0");
-        $("#checkPasswordDisplay").hide();
-        $("#passwordDisplay").hide();
+        $("#id").val(row.id);
         $("#statusDisplay").show();
-        $('#loginName').attr("disabled","false");
-        $('#loginName').validatebox('remove');
-        $('#password').validatebox('remove');
-        $('#checkPassword').validatebox('remove');
-        url = getContextPath ()+"/customer/modify.do";
-        $("#dlg").dialog({title: "编辑个人客户信息",modal:true});
+        $("#type").combobox("setValue",row.type);
+        $("#status").combobox("setValue",row.status);
+        $('#v').validatebox('remove');
+        $('#v').attr("disabled","disabled");
+        $("#type").combobox({disabled: true});
+        $("#status").combobox({disabled: true});
+        url = getContextPath ()+"/version/modify.do";
+        $("#dlg").dialog({title: "编辑版版本信息",modal:true});
         $("#dlg").dialog("open");
     });
     //保存按钮
@@ -162,48 +150,67 @@ $(document).ready(function(){
         $("#fm").form('clear');
     });
 
-    //重置密码窗口
-    $('#openRestePwDialog').click(function(){
+    //生效按钮
+    $('#effect').click(function(){
         var selectedRows = $("#dg").datagrid('getSelections');
         if (selectedRows.length != 1) {
-            $.messager.alert("系统提示", "请选择一条要编辑的数据！");
+            $.messager.alert("系统提示", "请选择一条的数据！");
             return;
         }
         var row = selectedRows[0];
-        if (row.type != 0) {
-            $.messager.alert("系统提示", "只能编辑普通用户！");
+        if (row.status == 0) {
+            $.messager.alert("系统提示", "版本已生效！");
             return;
         }
-        $("#resetPwDialog").dialog({title: "重置密码",modal:true});
-        $("#resetPwDialog").dialog("open");
-    });
-    //重置密码保存按钮
-    $('#pwSaveDialog').click(function(){
-        var selectedRows = $("#dg").datagrid('getSelections');
-        var row = selectedRows[0];
-        $.messager.confirm("系统提示", "您确认要重置个人客户<font color=red>"
-        + row.loginName + "</font>的登录密码？", function (r) {
+        $("#id").val(row.id);
+        $.messager.confirm("系统提示", "您确认要生效版本<font color=red>"
+         + row.name+ "</font>吗？", function (r) {
             if (r) {
-                $.post(getContextPath ()+"/customer/modify.do", {
-                    id:row.id,
-                    password:$("#resetPassword").val(),
-                    type:$("#type").val()
-
+                $.post( getContextPath ()+"/version/effect.do", {
+                    id: row.id
                 }, function (data) {
-                    if (data.result=="success") {
-                        $("#resetPwDialog").dialog("close");
-                        $.messager.alert("系统提示", "密码重置成功！");
-                    } else {
-                        $.messager.alert("系统提示", "密码重置失败！");
+                    if (data.result=='success') {
+                        $.messager.alert("系统提示", "操作成功！");
+                        $("#dg").datagrid("reload");
+                    }else{
+                        $.messager.alert("系统提示", "操作失败！");
                     }
                 }, "json");
             }
         });
     });
-    //重置关闭按钮
-    $('#pwCloseDialog').click(function(){
-        $("#resetPwDialog").dialog("close");
+
+    //删除按钮
+    $('#delete').click(function(){
+        var selectedRows = $("#dg").datagrid('getSelections');
+        if (selectedRows.length != 1) {
+            $.messager.alert("系统提示", "请选择一条要删除的数据！");
+            return;
+        }
+        var row = selectedRows[0];
+        if (row.status == 0) {
+            $.messager.alert("系统提示", "生效版本不能删除！");
+            return;
+        }
+        $.messager.confirm("系统提示", "您确认要删除版本<font color=red>"
+        + row.name+ "</font>吗？", function (r) {
+            if (r) {
+                $.post( getContextPath ()+"/version/delete.do", {
+                    id: row.id
+                }, function (data) {
+                    if (data.result=='success') {
+                        $.messager.alert("系统提示", "数据已成功删除！");
+                        $("#dg").datagrid("reload");
+                    }else{
+                        $.messager.alert("系统提示", "操作失败！");
+                    }
+                }, "json");
+            }
+        });
     });
+
+
+
 
 });
 
