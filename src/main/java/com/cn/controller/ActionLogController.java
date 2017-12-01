@@ -63,14 +63,14 @@ public class ActionLogController extends BaseController{
     public @ResponseBody
     Map list(@RequestParam(value="page", required=false) String page,
                  @RequestParam(value="rows", required=false) String rows,
-            String loginName,String beginTime,String endTime,String token,Integer status)throws Exception
+            String loginName,String beginTime,String endTime,String token,Integer status,String actionUrl)throws Exception
     {
 
         ActionLogEx queryLog=new ActionLogEx();
         Integer pageNumber= Integer.valueOf(page)-1;
         Integer pageSize= Integer.valueOf(rows);
         if(StringUtil.isNotEmpty(loginName)){
-            queryLog.setLoginId(loginName);
+            queryLog.setLoginName(loginName);
         }
         if(StringUtil.isNotEmpty(token)){
             queryLog.setToken(token);
@@ -83,6 +83,9 @@ public class ActionLogController extends BaseController{
         }
         if(StringUtil.isNotEmpty( status)){
             queryLog.setStatus(status);
+        }
+        if(StringUtil.isNotEmpty( actionUrl)){
+            queryLog.setActionUrl(actionUrl);
         }
         Map map= esService.getActionLogPageByEntity(queryLog,pageNumber,pageSize);
         Map result=new HashMap();

@@ -17,19 +17,18 @@
 
             <tr>
 
-                <td>&nbsp;token：&nbsp;<input type="text" id="qryToken" size="40"/></td>
-                <td>&nbsp;url：&nbsp;<input type="text" id="qryActionUrl" size="40"/></td>
-                <td>&nbsp;登录名：&nbsp;<input type="text" id="qryLoginName" size="20"/></td>
+                <td>&nbsp;token：&nbsp;<input type="text" id="qryToken" size="40"/><td>
+                <td>&nbsp;登录名：&nbsp;<input type="text" id="qryLoginName" size="20"/><td>
+                <td>&nbsp;开始时间：&nbsp;<input type="text" id="qryBeginTime" size="20" class="Wdate" onfocus="WdatePicker({readOnly:true,isShowClear:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"/><td>
+                <td>&nbsp;结束时间：&nbsp;<input type="text" id="qryEndTime" size="20"  class="Wdate" onfocus="WdatePicker({readOnly:true,isShowClear:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"/><td>
                 <td>&nbsp;状态：&nbsp;
                     <select id="qryStatus" name="qryStatus" >
                         <option value="-1">全部</option>
                         <option value="0">成功</option>
                         <option value="1">失败</option>
                     </select>
-                </td>
-                <td>&nbsp;开始时间：&nbsp;<input type="text" id="qryBeginTime" size="20" class="Wdate" onfocus="WdatePicker({readOnly:true,isShowClear:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"/></td>
-                <td>&nbsp;结束时间：&nbsp;<input type="text" id="qryEndTime" size="20"  class="Wdate" onfocus="WdatePicker({readOnly:true,isShowClear:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})"/></td>
-                <td><a id="search" class="easyui-linkbutton" iconCls="icon-search"  data-options="selected:true">搜索</a> </td>
+                <td>
+                <td><a id="searchUser" class="easyui-linkbutton" iconCls="icon-search" plain="true">搜索</a> </td>
 
             </tr>
         </tabel>

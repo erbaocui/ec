@@ -19,11 +19,7 @@ $(document).ready(function(){
             {field:'token',title:'token',width:"17%"},
 
             {field: 'status', title: '状态', width:"3%",
-                formatter: function (value, rec, index) {
-                    if (value == 0) return '有效';
-                    if (value == 1) return '无效';
-                    return decodeURI('');
-                }
+                formatter: commonFormatter.status
             },
             {field:'requestParam',title:'请求参数',width:"18%"},
             {field:'responseParam',title:'返回参数',width:"18%"},
@@ -48,8 +44,7 @@ $(document).ready(function(){
             "beginTime":$("#qryBeginTime").val(),
             "endTime":$("#qryEndTime").val(),
             "token": $("#qryToken").val(),
-            "status":$("#qryStatus").val(),
-            "actionUrl":$("#qryActionUrl").val()
+            "status":$("#qryStatus").val()
         },
         onLoadSuccess: function (data) {
             if (data.total == 0) {
@@ -79,14 +74,13 @@ $(document).ready(function(){
         displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
     });
     //搜索按钮
-    $('#search').click(function(){
+    $('#searchUser').click(function(){
         $("#dg").datagrid('load', {
             "loginName": $("#qryLoginName").val(),
             "beginTime":$("#qryBeginTime").val(),
             "endTime":$("#qryEndTime").val(),
             "token": $("#qryToken").val(),
-            "status":$("#qryStatus").val(),
-            "actionUrl":$("#qryActionUrl").val()
+            "status":$("#qryStatus").val()
         });
     });
     //关闭按钮
