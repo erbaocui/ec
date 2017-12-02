@@ -127,6 +127,29 @@ link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/js/jq
             return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
 
         },
+        sedMilli: function (value, rec, index) {
+            if (value == null) {
+                return "";
+            }
+            var date = new Date(value);
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            m = m < 10 ? ('0' + m) : m;
+            var d = date.getDate();
+            d = d < 10 ? ('0' + d) : d;
+            var h = date.getHours();
+            h = h < 10 ? ('0' + h) : h;
+            var minute = date.getMinutes();
+            var second = date.getSeconds();
+            var milliSecond=date.getMilliseconds();
+            minute = minute < 10 ? ('0' + minute) : minute;
+            second = second < 10 ? ('0' + second) : second;
+            milliSecond=milliSecond<10 ?('00' + milliSecond) :milliSecond;
+            milliSecond=(milliSecond<100&&milliSecond>=10) ?('0' + milliSecond) :milliSecond;
+
+            return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second+ ':'+ milliSecond ;
+
+        },
 
         day: function (value, rec, index) {
             if (value == null) {

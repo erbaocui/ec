@@ -50,7 +50,10 @@
         <property name="taskExecutor" ref="executor" />
     </bean>-->
 
+
     <bean id="springUtils" class="com.cn.util.SpringUtils"/>
-    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" />
+    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" >
+
+    </bean>
    <!-- <bean id="scheduler"  class="org.springframework.scheduling.quartz.SchedulerFactoryBean"/>-->
 </beans>

@@ -7,26 +7,18 @@ import com.cn.util.DateUtil;
 import com.cn.util.IdGenerator;
 import com.cn.vo.ActionLog;
 import com.cn.vo.ActionLogEx;
-import org.apache.lucene.queryparser.xml.QueryBuilder;
+import com.cn.vo.JobLog;
+import com.cn.vo.JobLogEx;
 import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.action.search.MultiSearchResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.MatchPhraseQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.RangeQueryBuilder;
-import org.elasticsearch.index.search.MatchQuery;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.sort.SortOrder;
-import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.net.InetAddress;
 import java.util.*;
 
 /**
@@ -39,7 +31,30 @@ public class EsService implements IEsService {
     private ESTransportClient esTransportClient;
 
     @Override
-    public void  createActionLog(ActionLog log){
+    public void addJobLog(JobLog log) {
+        try {
+
+
+
+            Map<String, Object> json = new HashMap<String,Object>();
+            json.put("method", log.getMethod());
+            json.put("param",log.getParam());
+            json.put("bean",log.getBean());
+            json.put("method", log.getMethod());
+            json.put("startTime", log.getStartTime());
+            json.put("finishTime",log.getFinishTime());
+            json.put("executeTime",log.getExecuteTime());
+            json.put("status",log.getStatus());
+            json.put("errorStack", log.getErrorStack());
+
+            IndexResponse response = esTransportClient.getObject().prepareIndex(EsIndex.INDEX_TASK_LOG, EsIndex.TYPE_TASK_LOG ,IdGenerator.getId()).setSource(json).execute().actionGet();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void  addActionLog(ActionLog log){
 
         try {
 
@@ -153,6 +168,59 @@ public class EsService implements IEsService {
         result.put("total",total);
         return result;
     }
+
+    public Map  getJobLogPageByEntity(JobLogEx taskLog, Integer pageNo, Integer pageSize) throws Exception{
+
+        SearchRequestBuilder searchRequestBuilder=esTransportClient.getObject().prepareSearch(EsIndex.INDEX_TASK_LOG)
+                .setTypes(EsIndex.TYPE_TASK_LOG);
+        TimeZone srcTimeZone = TimeZone.getTimeZone("GMT+8");
+        TimeZone destTimeZone = TimeZone.getTimeZone("GMT");
+
+        BoolQueryBuilder boolQueryBuilder=QueryBuilders.boolQuery();
+
+        if(taskLog.getBeginTime()!=null){
+
+            boolQueryBuilder=boolQueryBuilder.must(QueryBuilders.rangeQuery("startTime").format("yyyyMMddHHmmss").gte(DateUtil.convert2String(DateUtil.dateTransformBetweenTimeZone(taskLog.getBeginTime(), srcTimeZone, destTimeZone), "yyyyMMddHHmmss")));
+
+        }
+        if(taskLog.getEndTime()!=null){
+
+            boolQueryBuilder=boolQueryBuilder.must(QueryBuilders.rangeQuery("startTime").format("yyyyMMddHHmmss").lte(DateUtil.convert2String(DateUtil.dateTransformBetweenTimeZone(taskLog.getEndTime(), srcTimeZone, destTimeZone), "yyyyMMddHHmmss")));
+
+        }
+        SearchResponse response = searchRequestBuilder
+                .setQuery(boolQueryBuilder)
+                .setFrom(pageNo * pageSize).setSize(pageSize)
+                .addSort("startTime", SortOrder.DESC)
+                .get();
+
+        SearchHit[] searchHits = response.getHits().getHits();
+        Long total = response.getHits().getTotalHits();
+        List<JobLog> list=new ArrayList<JobLog>();
+
+        for(SearchHit hit:searchHits){
+            Map document= hit.getSource();
+            JobLog log=new JobLog();
+            log.setId((String) document.get("id"));
+            log.setParam((String) document.get("param"));
+            log.setBean((String) document.get("bean"));
+            log.setMethod((String) document.get("method"));
+            log.setStartTime( DateUtil.setTimeZone(DateUtil.convert2Date((String)document.get("startTime"),"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
+            log.setStartTime(DateUtil.dateTransformBetweenTimeZone(log.getStartTime(), srcTimeZone, destTimeZone));
+            log.setFinishTime( DateUtil.setTimeZone(DateUtil.convert2Date((String)document.get("finishTime"),"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
+            log.setFinishTime(DateUtil.dateTransformBetweenTimeZone(log.getFinishTime(),srcTimeZone ,destTimeZone));
+            log.setExecuteTime((String) document.get("executeTime"));
+            log.setStatus((Integer) document.get("status"));
+
+            log.setErrorStack((String) document.get("errorStack"));
+            list.add(log);
+        }
+        Map<String,Object> result=new HashMap<String,Object>();
+        result.put("list",list);
+        result.put("total",total);
+        return result;
+    }
+
 
     public ESTransportClient getEsTransportClient() {
         return esTransportClient;
