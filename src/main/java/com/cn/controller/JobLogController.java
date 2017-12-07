@@ -2,7 +2,6 @@ package com.cn.controller;
 
 import com.cn.anno.Config;
 import com.cn.service.IEsService;
-import com.cn.service.impl.JobService;
 import com.cn.util.DateUtil;
 import com.cn.util.IdGenerator;
 import com.cn.util.StringUtil;

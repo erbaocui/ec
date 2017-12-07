@@ -6,7 +6,7 @@
 <head>
     <%@include file="/page/common/header.jsp"%><!--静态包含-->
     <script type="text/javascript" src="list.js"></script>
-    <link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/page/role/basic_info.css" />
+    <link href="<%=request.getContextPath()%>/css/basic_info.css" rel="stylesheet">
 </head>
 <body style="margin:1px;">
 

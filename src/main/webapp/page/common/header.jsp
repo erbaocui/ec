@@ -10,7 +10,7 @@ link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/js/jq
 --%>
 
 <link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/uimaker/easyui.css" />
-<link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/uimaker/css/base.css" />
+<link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/css/base.css" />
 <%--<link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/uimaker/icon.css" />--%>
 
 

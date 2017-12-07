@@ -131,8 +131,6 @@
      buttons="#imgDlg-buttons">
     <form id="imgFm" method="post">
         <input type="hidden" id="imgId" name="imgId">
-        <input type="hidden" id="imgBrief" name="imgBrief">
-        <input type="hidden" id="imgThumb" name="imgThumb">
     <table>
          <tr>
                 <td id="imgUrlName"></td>
