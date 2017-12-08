@@ -21,9 +21,9 @@
 <div class="container">
 
     <div class="content">
-        <div class="easyui-tabs1" style="width:80%;">
+        <div class="easyui-tabs1" style="width:90%;">
             <div title="参数信息" data-options="closable:false" class="basic-info"  buttons="#dlg-buttons">
-                <div class="column"><span class="current">注册信息</span></div>
+                <div class="column"><span class="current">参数设置</span></div>
                 <form id="fm">
                 <table class="kv-table">
                     <tbody id="tb">
