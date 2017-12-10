@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>流程页</title>
+    <title>参数设置</title>
     <link href="<%=request.getContextPath()%>/css/basic_info.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/js/plugins/uploadfiy/uploadify.css" />
     <%@include file="/page/common/header.jsp"%><!--静态包含-->

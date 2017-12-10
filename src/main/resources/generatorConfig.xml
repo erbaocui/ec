@@ -85,9 +85,17 @@
             <property name="rootInterface" value=""/>
 
         </javaClientGenerator>
-        <table tableName="t_param" domainObjectName="Param" enableCountByExample="false" enableUpdateByExample="false"
+        <table tableName="t_customer_message" domainObjectName="CustomerMessage" enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+
         <!--
+        <table tableName="t_message" domainObjectName="Message" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+
+          <table tableName="t_customer_message" domainObjectName="CustomerMessage" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+         <table tableName="t_param" domainObjectName="Param" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
           <table tableName="t_device" domainObjectName="Device" enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
         <table tableName="t_customer_device" domainObjectName="CustomerDevice" enableCountByExample="false" enableUpdateByExample="false"
