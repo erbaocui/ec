@@ -8,7 +8,7 @@ $.extend($.fn.validatebox.defaults.rules, {
                     async: false,
                     url:getContextPath ()+"/commodity/exist.do",
                     dataType:"json",
-                    data:{"name":value},
+                    data:{"name":value,"noid":$(param[0]).val()},
                     success: function(data){
                         if(data.result==true){
                             $.fn.validatebox.defaults.rules.CheckCommodity.message ="商品已存在";

@@ -101,6 +101,7 @@ $(document).ready(function(){
     });
     //编辑窗口
     $('#openModifyDialog').click(function(){
+        $("#fm").form('clear');
         var selectedRows = $("#dg").datagrid('getSelections');
         if (selectedRows.length != 1) {
             $.messager.alert("系统提示", "请选择一条要编辑的数据！");
@@ -110,7 +111,7 @@ $(document).ready(function(){
         initUpload();
         $('#fm').form('load', row);
         $("#status").combobox('select', row.status);
-       // $("#showImg").attr("src",row.url);
+        $("#showImg").attr("src",row.url);
         $("#statusDisplay").show();
         url = getContextPath ()+"/picture/modify.do";
         $("#dlg").dialog({title: "编辑房车图片信息",modal:true});

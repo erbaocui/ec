@@ -5,6 +5,7 @@ import com.cn.model.Commodity;
 import com.cn.service.ICommodityService;
 import com.cn.util.IdGenerator;
 import com.cn.util.StringUtil;
+import com.cn.vo.CommodityEx;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.log4j.Logger;
@@ -94,12 +95,15 @@ public class CommodityController extends BaseController{
      */
     @RequestMapping(value = "/exist")
     public @ResponseBody
-    Map exist(String name)throws Exception
+    Map exist(String name,String noid)throws Exception
     {
         Map result=new HashMap();
         Boolean flag=false;
-        Commodity commodity=new Commodity();
+        CommodityEx commodity=new CommodityEx();
         commodity.setName(name);
+        if(!StringUtil.isEmpty(noid)){
+            commodity.setNoid(noid);
+        }
         Commodity u=commodityService.getCommodityByEntity(commodity);
         if(null!=u){
             flag=true;

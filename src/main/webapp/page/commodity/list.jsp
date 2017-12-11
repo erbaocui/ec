@@ -49,7 +49,7 @@
             <tr>
                 <td>商品名：</td>
                 <td><input type="text" id="name" name="name"
-                           class="easyui-validatebox" data-options="required: true,validType:['CheckCommodity']"/>&nbsp;
+                           class="easyui-validatebox" data-options="required: true,validType:['CheckCommodity[\'#id\']']"/>&nbsp;
                 </td>
             </tr>
             <tr>
@@ -131,10 +131,12 @@
      buttons="#imgDlg-buttons">
     <form id="imgFm" method="post">
         <input type="hidden" id="imgId" name="imgId">
+        <input type="hidden" id="imgBrief" name="imgBrief">
+        <input type="hidden" id="imgThumb" name="imgThumb">
     <table>
          <tr>
                 <td id="imgUrlName"></td>
-                <td><input type="text" id="imgUrl" name="imgUrl" size="60"   /></td>
+                <td><input type="text" id="imgUrl" name="imgUrl" size="60"   readonly="readonly" /></td>
           </tr>
          <tr  >
             <td colspan="2" >   <img id="showImg" src="" style="width:400px;height:200px;padding: 10px 20px"></td>

@@ -27,9 +27,9 @@ $(document).ready(function(){
             {field:'_opation',title:"操作",width:"20%",align:'center',
                 formatter:function(value,row,index){
                     var str="";
-                         str+='<a href="#" class="easyui-linkbutton" onclick="openbrief(\''+index+'\')">简介图片</a>';
-                        str+='| <a href="#" class="easyui-linkbutton" onclick="openPics(\''+index+'\')">图片管理</a>';
-                        str+='| <a href="#" class="easyui-linkbutton" onclick="openthumb(\''+index+'\')">缩略图管理</a>';
+                         str+='<a href="#" class="easyui-linkbutton" onclick="openbrief(\''+index+'\')">详情图片</a>';
+                        str+='| <a href="#" class="easyui-linkbutton" onclick="openPics(\''+index+'\')">滑动图片</a>';
+                        str+='| <a href="#" class="easyui-linkbutton" onclick="openthumb(\''+index+'\')">商品封面</a>';
                     return str;
                 }
 
@@ -120,8 +120,8 @@ $(document).ready(function(){
         $("#fm").form('clear');
         $('#fm').form('load', row);
         $("#showImg").attr("src",row.brief);
-        $('#name').attr("disabled","false");
-        $('#name').validatebox('remove');
+        //$('#name').attr("disabled","false");
+        $('#name').validatebox('reduce');
         $("#status").combobox('select', row.status);
         $("#statusDisplay").show();
          url = getContextPath ()+"/commodity/modify.do";
