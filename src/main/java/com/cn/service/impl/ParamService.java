@@ -21,8 +21,16 @@ public class ParamService implements IParamService {
 
 
     @Override
-    public List<Param> getParamListByEntity(Param param){
-        return paramDao.list(param);
+    public List<Param> getAppParamList(Param param){
+        return paramDao.applist(param);
+    }
+    @Override
+    public List<Param>  getShareParamList(Param param){
+        return paramDao.sharelist(param);
+    }
+    @Override
+    public List<Param>  getMallParamList(Param param){
+        return paramDao.malllist(param);
     }
     @Override
     public Param getParamByEntity(Param param) {

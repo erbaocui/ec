@@ -14,8 +14,18 @@ import java.util.List;
 public class ParamDaoImpl extends BaseDaoImpl implements IParamDao {
 
     @Override
-    public List<Param> list(Param param) {
-        return (List<Param>)list("com.cn.dao.ParamMapper.selectByEntity", param);
+    public List<Param> applist(Param param) {
+        return (List<Param>)list("com.cn.dao.ParamMapper.selectApp", param);
+
+    }
+    @Override
+    public List<Param> sharelist(Param param) {
+        return (List<Param>)list("com.cn.dao.ParamMapper.selectShare", param);
+
+    }
+    @Override
+    public List<Param> malllist(Param param) {
+        return (List<Param>)list("com.cn.dao.ParamMapper.selectMall", param);
 
     }
 

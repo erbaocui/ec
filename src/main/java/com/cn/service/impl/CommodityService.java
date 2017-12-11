@@ -3,6 +3,7 @@ package com.cn.service.impl;
 import com.cn.dao.ICommodityDao;
 import com.cn.model.Commodity;
 import com.cn.service.ICommodityService;
+import com.cn.vo.CommodityEx;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +26,8 @@ public class CommodityService implements ICommodityService {
         return commodityDao.pageList(commodity);
     }
     @Override
-    public Commodity getCommodityByEntity(Commodity commodity) {
-        return commodityDao.find(commodity);
+    public Commodity getCommodityByEntity(CommodityEx commodityEx) {
+        return commodityDao.find(commodityEx);
     }
     @Override
     public void addCommodity(Commodity commodity) {
@@ -34,7 +35,7 @@ public class CommodityService implements ICommodityService {
     }
 
     @Override
-    public void modifyCommodity(Commodity commodity) {
+    public void modifyCommodity(Commodity commodity ) {
         commodityDao.update(commodity);
     }
 

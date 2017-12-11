@@ -13,7 +13,9 @@ import java.util.List;
 public interface IParamDao {
 
 
-    public List<Param> list(Param param);
+    public List<Param> applist(Param param);
+    public List<Param> sharelist(Param param);
+    public List<Param> malllist(Param param);
     public void insert(Param param);
     public void update(Param param);
     public Param find(Param param);

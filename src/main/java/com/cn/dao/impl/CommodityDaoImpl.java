@@ -2,6 +2,7 @@ package com.cn.dao.impl;
 
 import com.cn.dao.ICommodityDao;
 import com.cn.model.Commodity;
+import com.cn.vo.CommodityEx;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class CommodityDaoImpl extends BaseDaoImpl implements ICommodityDao {
     }
 
     @Override
-    public Commodity find(Commodity commodity) {
-        return (Commodity)findObject("com.cn.dao.CommodityMapper.selectOneByEntity", commodity);
+    public Commodity find(CommodityEx commodityEx) {
+        return (Commodity)findObject("com.cn.dao.CommodityMapper.selectOneByEntity", commodityEx);
     }
 }

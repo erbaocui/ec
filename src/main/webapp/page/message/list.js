@@ -98,37 +98,66 @@ $(document).ready(function(){
         $("#st").hide();
         $("#bt").show();
         url = getContextPath ()+"/message/add.do";
-        $("#dlg").dialog({title: "添加推送消息",modal:true,buttons: "#dlg-buttons"});
+        $("#dlg").dialog({title: "添加推送消息",modal:true});
         $("#dlg").dialog("open");
 
     });
 
     //保存按钮
-    $('#saveDialog').click(function(){
-        $("#fm").form("submit", {
-            url: url,
-            onSubmit: function () {
-                return $(this).form("validate");
-            },
-            success: function (data) {
-                var json = $.parseJSON(data);
-                if (json.result == "success") {
-                    $.messager.alert("系统提示", "操作成功");
-                    $("#fm").form('clear');
-                    $("#dlg").dialog("close");
-                    $("#dg").datagrid("reload");
-                }else{
-                    $.messager.alert("系统提示", "操作失败");
-                }
+    //保存按钮
+        $('#save').click(function(){
+          /*  $("#fm").form("submit", {
+                url: getContextPath()+'/param/modify.do',
+                onSubmit: function () {
+                    return $(this).form("validate");
+                },
+                success: function (data) {
+                    var json = $.parseJSON(data);
+                    if (json.result == "success") {
+                        $.messager.alert("系统提示", "保存成功");
+                    }else{
+                        $.messager.alert("系统提示", "保存失败");
+                    }
 
-            }
+                }
+            });*/
+            $.ajax({
+                url:url,
+                type:'POST', //GET
+                async:false,    //或false,是否异步
+                data:{title: $("#title").val(),content: $("#content").val(),url:$("#url").val(),picture:$("#picture").val()
+                },
+                timeout:5000,    //超时时间
+                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                beforeSend:function(xhr){
+
+                },
+                success:function(data,textStatus,jqXHR){
+                    if (data.result == "success") {
+                        $.messager.alert("系统提示", "保存成功");
+                        $("#fm").form('clear');
+                        $("#dlg").dialog("close");
+                        $("#dg").datagrid("reload");
+                    }else{
+                        $.messager.alert("系统提示", "保存失败");
+                    }
+                },
+                error:function(xhr,textStatus){
+
+                },
+                complete:function(){
+
+                }
+            });
         });
-    });
+
     //关闭按钮
-    $('#closeDialog').click(function(){
+    $('#close').click(function(){
         $("#dlg").dialog("close");
         $("#fm").form('clear');
     });
+
+
 
 
 });
@@ -137,14 +166,14 @@ $(document).ready(function(){
 function showInfo(index) {
 
     var row = $('#dg').datagrid('getData').rows[index];
-    $('#fm').form('load', row);
-    //$("#loginName").val(row.loginName);
-    $("#st").show();
-    $("#bt").hide();
-    $("#showImg").attr("src", row.picture);
-    $("#sendTime").val(commonFormatter.time(row.sendTime));
-    $("#dlg").dialog({title: "推送信息", modal: true,buttons:""});
-    $("#dlg").dialog("open");
+    $("#titleShow").val(row.title);
+    $("#contentShow").val(row.content);
+    $("#pictureShow").val(row.picture);
+    $("#urlShow").val(row.url);
+    $("#showImgShow").attr("src", row.picture);
+    $("#sendTimeShow").val(commonFormatter.time(row.sendTime));
+    $("#dlgShow").dialog({title: "推送信息", modal: true});
+    $("#dlgShow").dialog("open");
 }
 
 

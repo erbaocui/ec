@@ -3,12 +3,12 @@
  */
 
 $(document).ready(function(){
-
+    //app
     $.ajax({
         url:getContextPath()+'/param/list.do',
         type:'POST', //GET
         async:false,    //或false,是否异步
-        data:{
+        data:{type:"0"
         },
         timeout:5000,    //超时时间
         dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
@@ -17,7 +17,7 @@ $(document).ready(function(){
         },
         success:function(data,textStatus,jqXHR){
             if(data.rows!=null){
-                $("#tb").empty();
+                $("#apptb").empty();
                 var str="";
                 for (var i=0; i<data.total; i++)
                 {
@@ -42,9 +42,113 @@ $(document).ready(function(){
 
                 }
                // str+="<tr><td colspan='3' class='kv-content'></td><td colspan='1' ><a href='#' class='easyui-linkbutton' data-options='iconCls:\'icon-list\'' onclick='openDialog()'>业务日志</a> <a href='#' class='easyui-linkbutton' data-options='iconCls:\'icon-back\''>返回</a></td></tr>";
-                $("#tb").append(str);
+                $("#apptb").append(str);
 
-                $.parser.parse($('#tb').parent());
+                $.parser.parse($('#apptb').parent());
+
+            }
+        },
+        error:function(xhr,textStatus){
+
+        },
+        complete:function(){
+
+        }
+    });
+    //分享
+    $.ajax({
+        url:getContextPath()+'/param/list.do',
+        type:'POST', //GET
+        async:false,    //或false,是否异步
+        data:{type:"1"
+        },
+        timeout:5000,    //超时时间
+        dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+        beforeSend:function(xhr){
+
+        },
+        success:function(data,textStatus,jqXHR){
+            if(data.rows!=null){
+                $("#sharetb").empty();
+                var str="";
+                for (var i=0; i<data.total; i++)
+                {
+                    var row= data.rows[i];
+                    if((i%2)==0){  str+="<tr>";}
+                    if( row.type==0) {
+                        str += "<td class='kv-label'>" + row.name + "</td> <td class='kv-content'><input type='text' name='values' id='"  +row.kv + "'   class='easyui-validatebox' required='true' value='" +  row.value + "'/><input type='hidden' name='kvs' value='"  +row.kv + "'/></td>";
+                    }
+                    if( row.type==1) {
+                        str += "<td class='kv-label'>" + row.name  + "</td> <td class='kv-content'><input type='text' name='values' id='"  +row.kv + "' class='easyui-validatebox' data-options='required: true,validType:[\"integ\"]' value='" +  row.value + "'/><input type='hidden' name='kvs' value='" +row.kv + "'/></td>";
+                    }
+                    if( row.type==2) {
+                        str += "<td class='kv-label'>" +  row.name  + "</td> <td class='kv-content'><input type='text' name='values'  id='"  +row.kv + "' class='easyui-validatebox' data-options='required: true,validType:[\"number\"]' value='" + row.value + "'/><input type='hidden' name='kvs' value='" +row.kv + "'/></td>";
+                    }
+                    if( row.type==3) {
+                        str += "<td class='kv-label'>" +  row.name  + "</td> <td class='kv-content'><input type='text' name='values'   id='"  +row.kv + "' class='easyui-validatebox' required='true'  value='" + row.value + "' readonly='readonly'/>&nbsp<a href='javascript:openImg(\""+row.kv+"\");' class='easyui-linkbutton' >图片上传</a><input type='hidden' name='kvs' value='" +row.kv + "'/></td>";
+                    }
+                    if((i%2)==0&&(i+1)==data.total){
+                        str+="<td class='kv-label'></td> <td class='kv-content'></td></tr>";
+                    }
+                    if((i%2)==1){str+="</tr>";}
+
+                }
+                // str+="<tr><td colspan='3' class='kv-content'></td><td colspan='1' ><a href='#' class='easyui-linkbutton' data-options='iconCls:\'icon-list\'' onclick='openDialog()'>业务日志</a> <a href='#' class='easyui-linkbutton' data-options='iconCls:\'icon-back\''>返回</a></td></tr>";
+                $("#sharetb").append(str);
+
+                $.parser.parse($('#sharetb').parent());
+
+            }
+        },
+        error:function(xhr,textStatus){
+
+        },
+        complete:function(){
+
+        }
+    });
+    //商城
+    $.ajax({
+        url:getContextPath()+'/param/list.do',
+        type:'POST', //GET
+        async:false,    //或false,是否异步
+        data:{type:"2"
+        },
+        timeout:5000,    //超时时间
+        dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+        beforeSend:function(xhr){
+
+        },
+        success:function(data,textStatus,jqXHR){
+            if(data.rows!=null){
+                $("#malltb").empty();
+                var str="";
+                for (var i=0; i<data.total; i++)
+                {
+                    var row= data.rows[i];
+                    if((i%2)==0){  str+="<tr>";}
+                    if( row.type==0) {
+                        str += "<td class='kv-label'>" + row.name + "</td> <td class='kv-content'><input type='text' name='values' id='"  +row.kv + "'   class='easyui-validatebox' required='true' value='" +  row.value + "'/><input type='hidden' name='kvs' value='"  +row.kv + "'/></td>";
+                    }
+                    if( row.type==1) {
+                        str += "<td class='kv-label'>" + row.name  + "</td> <td class='kv-content'><input type='text' name='values' id='"  +row.kv + "' class='easyui-validatebox' data-options='required: true,validType:[\"integ\"]' value='" +  row.value + "'/><input type='hidden' name='kvs' value='" +row.kv + "'/></td>";
+                    }
+                    if( row.type==2) {
+                        str += "<td class='kv-label'>" +  row.name  + "</td> <td class='kv-content'><input type='text' name='values'  id='"  +row.kv + "' class='easyui-validatebox' data-options='required: true,validType:[\"number\"]' value='" + row.value + "'/><input type='hidden' name='kvs' value='" +row.kv + "'/></td>";
+                    }
+                    if( row.type==3) {
+                        str += "<td class='kv-label'>" +  row.name  + "</td> <td class='kv-content'><input type='text' name='values'   id='"  +row.kv + "' class='easyui-validatebox' required='true'  value='" + row.value + "' readonly='readonly'/>&nbsp<a href='javascript:openImg(\""+row.kv+"\");' class='easyui-linkbutton' >图片上传</a><input type='hidden' name='kvs' value='" +row.kv + "'/></td>";
+                    }
+                    if((i%2)==0&&(i+1)==data.total){
+                        str+="<td class='kv-label'></td> <td class='kv-content'></td></tr>";
+                    }
+                    if((i%2)==1){str+="</tr>";}
+
+                }
+                // str+="<tr><td colspan='3' class='kv-content'></td><td colspan='1' ><a href='#' class='easyui-linkbutton' data-options='iconCls:\'icon-list\'' onclick='openDialog()'>业务日志</a> <a href='#' class='easyui-linkbutton' data-options='iconCls:\'icon-back\''>返回</a></td></tr>";
+                $("#malltb").append(str);
+
+                $.parser.parse($('#malltb').parent());
 
             }
         },

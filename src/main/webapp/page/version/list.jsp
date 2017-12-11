@@ -68,7 +68,7 @@
             </tr>
             <tr>
                 <td>版本：</td>
-                <td><input type="text" id="v" name="v" class="easyui-validatebox" data-options="required: true,validType:['CheckVersion[\'#type\']']" />&nbsp;
+                <td><input type="text" id="v" name="v" class="easyui-validatebox" data-options="required: true,validType:['CheckVersion[\'#type\',\'#id\']']" />&nbsp;
                 </td>
             </tr>
             <tr>

@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 
 /**
@@ -62,11 +59,20 @@ public class ParamController extends BaseController{
      */
     @RequestMapping(value = "/list")
     public @ResponseBody
-    Map list()throws Exception
+    Map list(String type)throws Exception
     {
 
         Param param=new Param();
-        List<Param> list=paramService.getParamListByEntity(param);
+        List<Param> list=new ArrayList<Param>();
+        if(type.equals("0")){
+            list=paramService.getAppParamList(param);
+        }
+        if(type.equals("1")){
+            list=paramService.getShareParamList(param);
+        }
+        if(type.equals("2")){
+            list=paramService.getMallParamList(param);
+        }
 
         Map map=new HashMap();
         map.put("rows",list);

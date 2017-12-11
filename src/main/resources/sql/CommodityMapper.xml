@@ -39,7 +39,7 @@
     from t_commodity
     where 1=1
     <if test="name!= null">
-      and name ='${name}'
+      <![CDATA[ and name = #{name,jdbcType=VARCHAR}  ]]>
     </if>
     <if test="noid!= null">
       <![CDATA[ and id<>'${noid}'   ]]>
@@ -56,7 +56,7 @@
     from  t_commodity
     where 1=1
     <if test="name!= null">
-      and name ='${name}'
+      and name = #{name,jdbcType=VARCHAR}
     </if>
     <if test="status!= null">
       and status='${status}'

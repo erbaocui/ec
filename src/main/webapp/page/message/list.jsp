@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/js/plugins/uploadfiy/uploadify.css" />
     <%@include file="/page/common/header.jsp"%><!--静态包含-->
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/plugins/uploadfiy/jquery.uploadify.js"></script>
-    <script type="text/javascript" src="list.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/page/message/list.js"></script>
 
 </head>
 <body style="margin:1px;">
@@ -93,15 +93,56 @@
         </table>
     </form>
 </div>
-
-
-
-
-
 <div id="dlg-buttons">
-    <a id="saveDialog" class="easyui-linkbutton" iconCls="icon-ok">发送</a>
-    <a id="closeDialog" class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
+    <a id="save" class="easyui-linkbutton" iconCls="icon-ok">发送</a>
+    <a id="close" class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
 </div>
+
+<div id="dlgShow" class="easyui-dialog"
+     style="width: 520px;height:420px;padding: 10px 20px" closed="true">
+
+        <table cellspacing="8px">
+            <tr>
+                <td>标题：</td>
+
+                <td><input type="text" id="titleShow" name="titleShow" size="40"   readonly="readonly"/>&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>发送时间：</td>
+
+                <td><input type="text" id="sendTimeShow" name="sendTimeShow" size="40"    readonly="readonly"/>&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>内容：</td>
+                <td><textarea id="contentShow" name="contentShow" cols="40"   readonly="readonly"></textarea></td>
+            </tr>
+            <tr>
+                <td>URL：</td>
+
+                <td><input type="text" id="urlShow" name="urlShow"  size="40"  readonly="readonly"/>&nbsp;
+                </td>
+            </tr>
+
+            <tr>
+                <td>图片：</td>
+
+                <td><input type="text" id="pictureShow" name="pictureShow" size="40" readonly="readonly"/>&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" >   <img id="showImgShow"Show src="" style="width:300px;height:130px;padding: 10px 20px"></td>
+            </tr>
+        </table>
+
+</div>
+
+
+
+
+
+
 
 </body>
 </html>

@@ -23,15 +23,28 @@
     <div class="content">
         <div class="easyui-tabs1" style="width:90%;">
             <div title="参数信息" data-options="closable:false" class="basic-info"  buttons="#dlg-buttons">
-                <div class="column"><span class="current">参数设置</span></div>
                 <form id="fm">
+                <div class="column"><span class="current">app参数设置</span></div>
+
                 <table class="kv-table">
-                    <tbody id="tb">
+                    <tbody id="apptb">
 
                    </tbody>
                     </table>
+                    <div class="column"><span class="current">share参数设置</span></div>
 
-                </form>
+                    <table class="kv-table">
+                        <tbody id="sharetb">
+
+                        </tbody>
+                    </table>
+                    <div class="column"><span class="current">商城参数设置</span></div>
+
+                    <table class="kv-table">
+                        <tbody id="malltb">
+
+                        </tbody>
+                    </table>
                 <table class="kv-table">
 
                     <tr>
@@ -46,7 +59,7 @@
 
 
                 </table>
-
+                </form>
             </div>
 
         </div>

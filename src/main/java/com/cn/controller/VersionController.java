@@ -6,6 +6,7 @@ import com.cn.util.DateUtil;
 import com.cn.util.IdGenerator;
 import com.cn.util.MD5Util;
 import com.cn.util.StringUtil;
+import com.cn.vo.VersionEx;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.log4j.Logger;
@@ -94,13 +95,16 @@ public class VersionController extends BaseController{
      */
     @RequestMapping(value = "/exist")
     public @ResponseBody
-    Map exsit(String type,String v)throws Exception
+    Map exsit(String type,String v,String noid)throws Exception
     {
         Map result=new HashMap();
         Boolean flag=false;
-        Version  version=new Version();
+        VersionEx version=new VersionEx();
         version.setType(type);
         version.setV(v);
+        if(!StringUtil.isEmpty(noid)){
+            version.setNoid(noid);
+        }
         Version u=versionService.getVersionByEntity(version);
         if(null!=u){
             flag=true;

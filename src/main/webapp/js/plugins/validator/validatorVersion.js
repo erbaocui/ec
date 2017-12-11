@@ -9,7 +9,7 @@ $.extend($.fn.validatebox.defaults.rules, {
                     async: false,
                     url:getContextPath ()+"/version/exist.do",
                     dataType:"json",
-                    data:{"v":value,"type":$(param[0]).combobox("getValue")},
+                    data:{"v":value,"type":$(param[0]).combobox("getValue"),"noid":$(param[1]).val()},
                     success: function(data){
                         if(data.result==true){
                             $.fn.validatebox.defaults.rules.CheckVersion.message ="版本已存";

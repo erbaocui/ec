@@ -96,8 +96,9 @@ $(document).ready(function(){
         $("#type").combobox({disabled: false});
         $("#type").combobox("setValue",0);
         $("#statusDisplay").hide();
-        $('#v').validatebox('reduce');
-        $('#v').attr("disabled","false");
+        //$('#v').validatebox('reduce');
+        //$("#v").removeAttr("disabled");
+        //$('#v').attr("disabled","false");
         url = getContextPath ()+"/version/add.do";
         $("#dlg").dialog({title: "添加版本信息",modal:true});
         $("#dlg").dialog("open");
@@ -115,8 +116,12 @@ $(document).ready(function(){
         $("#statusDisplay").show();
         $("#type").combobox("setValue",row.type);
         $("#status").combobox("setValue",row.status);
-        $('#v').validatebox('remove');
-        $('#v').attr("disabled","disabled");
+        /*$('#v').validatebox('remove');
+        //$('#v').attr("disabled","disabled");*/
+        //$('#v').validatebox('reduce');
+        //$('#v').attr("disabled","false");
+        //$("#v").removeAttr("disabled");
+
         $("#type").combobox({disabled: true});
         $("#status").combobox({disabled: true});
         url = getContextPath ()+"/version/modify.do";
@@ -188,10 +193,10 @@ $(document).ready(function(){
             return;
         }
         var row = selectedRows[0];
-        if (row.status == 0) {
+        /*if (row.status == 0) {
             $.messager.alert("系统提示", "生效版本不能删除！");
             return;
-        }
+        }*/
         $.messager.confirm("系统提示", "您确认要删除版本<font color=red>"
         + row.name+ "</font>吗？", function (r) {
             if (r) {
