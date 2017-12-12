@@ -159,7 +159,7 @@ public class CommodityController extends BaseController{
      */
     @RequestMapping(value = "/modify")
     public @ResponseBody
-    Map modify(String id,String status,String remark,String urlJd,String urlTmall,String certified,
+    Map modify(String id,String status,String name ,BigDecimal price,String remark,String urlJd,String urlTmall,String certified,
                String speedRefund,String sevenReturn)throws Exception
     {
         Map result=new HashMap();
@@ -168,6 +168,12 @@ public class CommodityController extends BaseController{
         commodity.setId(id);
         if(StringUtil.isNotEmpty( remark)) {
             commodity.setRemark(remark);
+        }
+        if(StringUtil.isNotEmpty(  name)) {
+            commodity.setName(name);
+        }
+        if(StringUtil.isNotEmpty( price)) {
+            commodity.setPrice(price);
         }
         if(StringUtil.isNotEmpty(status)) {
             commodity.setStatus(status);
