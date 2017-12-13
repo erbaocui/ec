@@ -66,7 +66,7 @@ public class VersionController extends BaseController{
                  @RequestParam(value="rows", required=false) String rows,String type,String status,HttpSession session)throws Exception
     {
         PageHelper.startPage(Integer.valueOf(page) ,Integer.valueOf(rows));
-        Version v=new Version();
+        VersionEx v=new VersionEx();
         if(StringUtil.isNotEmpty(status)) {
             if(!status.equals("-1")) {
                 v.setStatus(status);
@@ -144,10 +144,10 @@ public class VersionController extends BaseController{
     {
         Map result=new HashMap();
 
-        Version version=new Version();
+        VersionEx version=new VersionEx();
         version.setId(id);
-        version=versionService.getVersionByEntity(version);
-        versionService.modifyEffectVersion(version);
+        Version v=versionService.getVersionByEntity(version);
+        versionService.modifyEffectVersion(v);
         result.put("result","success");
         return result;
     }

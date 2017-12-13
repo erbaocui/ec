@@ -114,16 +114,18 @@ $(document).ready(function(){
         $('#fm').form('load', row);
         $("#id").val(row.id);
         $("#statusDisplay").show();
-        $("#type").combobox("setValue",row.type);
-        $("#status").combobox("setValue",row.status);
+        $("#type").combobox("setValue",row.type).combobox('disable');
+        $("#status").combobox("setValue",row.status).combobox('disable');
         /*$('#v').validatebox('remove');
         //$('#v').attr("disabled","disabled");*/
         //$('#v').validatebox('reduce');
         //$('#v').attr("disabled","false");
         //$("#v").removeAttr("disabled");
 
-        $("#type").combobox({disabled: true});
-        $("#status").combobox({disabled: true});
+       // $("#type").combobox({disabled: true});
+        //$("#status").combobox({disabled: true});
+       // $('#type').combobox('disable');
+        //$("#status").combobox('disable');
         url = getContextPath ()+"/version/modify.do";
         $("#dlg").dialog({title: "编辑版版本信息",modal:true});
         $("#dlg").dialog("open");

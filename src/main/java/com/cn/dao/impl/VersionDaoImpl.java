@@ -2,6 +2,7 @@ package com.cn.dao.impl;
 
 import com.cn.dao.IVersionDao;
 import com.cn.model.Version;
+import com.cn.vo.VersionEx;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class VersionDaoImpl extends BaseDaoImpl implements IVersionDao {
     }
 
     @Override
-    public Version find(Version version) {
+    public Version find(VersionEx version) {
         return (Version)findObject("com.cn.dao.VersionMapper.selectOneByEntity", version);
     }
     @Override

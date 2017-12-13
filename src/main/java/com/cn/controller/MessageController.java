@@ -4,6 +4,7 @@ import com.cn.model.Message;
 import com.cn.model.Role;
 import com.cn.model.Message;
 import com.cn.service.IMessageService;
+import com.cn.three.jpush.JpushUtil;
 import com.cn.util.DateUtil;
 import com.cn.util.IdGenerator;
 import com.cn.util.MD5Util;
@@ -133,12 +134,13 @@ public class MessageController extends BaseController{
         message.setContent(content);
         message.setUrl(url);
         message.setPicture(picture);
-       /* try{
-            发短信
-        }catch ()*/
+       try{
+             JpushUtil.jpushAndroid(title,content,message.getId());
+             message.setStatus("1");
+        }catch (Exception  e){
+           message.setStatus("0");
+       }
         message.setSendTime(new Date());
-
-        message.setStatus("0");
         messageService.addMessage(message);
         result.put("result","success");
          return result;

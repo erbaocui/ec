@@ -64,12 +64,11 @@
       and status ='${status}'
     </if>
     <if test="id!= null">
-      and id= '${id}'
+      and id=  #{id,jdbcType=VARCHAR}
     </if>
     <if test="noid!= null">
-      <![CDATA[ and id<>'${noid}'   ]]>
+      <![CDATA[ and id<>'${noid}']]>
     </if>
-     order by status,create_time DESC
      limit 1
   </select>
   <insert id="insert" parameterType="com.cn.model.Version">

@@ -3,6 +3,7 @@ package com.cn.service.impl;
 import com.cn.dao.IVersionDao;
 import com.cn.model.Version;
 import com.cn.service.IVersionService;
+import com.cn.vo.VersionEx;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -30,7 +31,7 @@ public class VersionService implements IVersionService {
 
 
     @Override
-    public Version getVersionByEntity(Version version) {
+    public Version getVersionByEntity(VersionEx version) {
         return versionDao.find(version);
     }
     @Override
