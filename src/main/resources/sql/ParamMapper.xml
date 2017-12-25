@@ -48,7 +48,7 @@
     select
     <include refid="Base_Column_List" />
     from t_param
-    where kv In ('tar','co','use_time','app_share_icon','app_share_title','app_share_content')
+    where kv In ('tar','co','use_time','health','nicotine','app_share_icon','app_share_title','app_share_content')
      order by seq
   </select>
 

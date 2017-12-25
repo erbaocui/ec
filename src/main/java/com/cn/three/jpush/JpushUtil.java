@@ -50,7 +50,11 @@ public class JpushUtil {
     public static void main(String[] args){
         Map<String,String > param=new HashMap<String,String>();
 
-       /// JpushUtil.jpushAndroid(param);
+        try {
+            JpushUtil.jpushAndroid("测试title","测试content","db8d60bd2dd34c2b9bded1e82a10c711");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }
